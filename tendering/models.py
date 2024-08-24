@@ -49,3 +49,7 @@ class Lot(models.Model):
             models.Index(fields=["is_active"]),
             models.Index(fields=["start_date"]),
         ]
+
+    def __str__(self):
+        active = "Active" if self.is_active else "Inactive"
+        return f"Lot: {self.name}. Owner: {self.owner}. Status: {active}"
