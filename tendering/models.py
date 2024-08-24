@@ -27,6 +27,9 @@ class Comment(models.Model):
     text = models.TextField(max_length=1000)
     created_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ("created_time", )
+
 
 class Lot(models.Model):
     name = models.CharField(max_length=63)
@@ -40,4 +43,9 @@ class Lot(models.Model):
     participant = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="active_lots")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lots")
 
-
+    class Meta:
+        ordering = ("is_active", "-start_date")
+        indexes = [
+            models.Index(fields=["is_active"]),
+            models.Index(fields=["start_date"]),
+        ]
