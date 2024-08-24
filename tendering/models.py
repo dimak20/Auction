@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -9,7 +11,7 @@ class Category(models.Model):
     class Meta:
         ordering = ("name", )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -17,7 +19,7 @@ class User(AbstractUser):
     class Meta:
         ordering = ("username", )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.username}: {self.first_name} {self.last_name}"
 
 
@@ -40,7 +42,7 @@ class Lot(models.Model):
     start_price = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
-    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="active_lots")
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through="Bid")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lots")
 
     class Meta:
@@ -50,6 +52,21 @@ class Lot(models.Model):
             models.Index(fields=["start_date"]),
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         active = "Active" if self.is_active else "Inactive"
         return f"Lot: {self.name}. Owner: {self.owner}. Status: {active}"
+
+    def get_highest_bidder(self) -> settings.AUTH_USER_MODEL:
+        highest_bid = self.bids.order_by("-amount").first()
+        return highest_bid.user if highest_bid else None
+
+    def get_highest_bid_amount(self) -> Decimal:
+        highest_bid = self.bids.order_by("-amount").first()
+        return highest_bid.amount if highest_bid else None
+
+
+class Bid(models.Model):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="bids")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bids")
+    created_time = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
