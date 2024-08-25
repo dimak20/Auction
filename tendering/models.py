@@ -1,3 +1,4 @@
+from django.urls import reverse
 from decimal import Decimal
 
 
@@ -22,6 +23,9 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return f"{self.username}: {self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("tendering:user-detail", args=[str(self.id)])
 
 
 class Comment(models.Model):
