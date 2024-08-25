@@ -1,5 +1,4 @@
 from http.client import HTTPResponse
-from lib2to3.fixes.fix_input import context
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
@@ -7,6 +6,7 @@ from django.shortcuts import render
 from django.views import generic
 
 from tendering.models import Category, User, Lot, Comment
+
 
 
 def index(request: HttpRequest) -> HTTPResponse:
