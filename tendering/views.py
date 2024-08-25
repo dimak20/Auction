@@ -27,9 +27,13 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
     queryset = Lot.objects.filter(is_active=False)
+    context_object_name = "inactive_lot_list"
+    template_name = "tendering/inactive_list.html"
 
 
 class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
     queryset = Lot.objects.filter(is_active=True)
+    context_object_name = "active_lot_list"
+    template_name = "tendering/active_list.html"

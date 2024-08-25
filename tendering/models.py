@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.utils import timezone
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
@@ -44,6 +45,14 @@ class Lot(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through="Bid")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lots")
+
+    def close(self) -> None:
+        if timezone.now() >= self.end_date and self.is_active:
+            highest_bid = self.bids.order_by("-amount").first()
+            if highest_bid:
+                self.owner = highest_bid.user
+                self.is_active = False
+                self.save()
 
     class Meta:
         ordering = ("is_active", "-start_date")
