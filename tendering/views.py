@@ -1,12 +1,14 @@
+from audioop import reverse
 from http.client import HTTPResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views import generic
 
-from tendering.forms import CommentForm, BidForm
+from tendering.forms import CommentForm, BidForm, LotForm
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
@@ -133,3 +135,10 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
             lot.current_price = bid.amount
             lot.save()
         return redirect("tendering:lot-detail", pk=lot.id)
+
+
+class LotCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Lot
+    template_name = "tendering/lot_form.html"
+    form_class = LotForm
+    success_url = reverse_lazy("tendering:lot-list")

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>User: {{ user.username }}</h1>
+  <h1>User: {{ user.username }} <a href="{% url 'tendering:lot-create' %}" style="float:right">Create lot</a>
+  </h1>
   <p><strong>First name: </strong>{{ user.first_name }}</p>
   <p><strong>Last name: </strong>{{ user.last_name }}</p>
   <div class="ml-3">

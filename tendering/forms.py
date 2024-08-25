@@ -18,7 +18,6 @@ class BidForm(forms.ModelForm):
     def clean_amount(self):
         amount = self.cleaned_data.get("amount")
         lot_id = self.data.get("lot_id")
-
         if lot_id:
             lot = Lot.objects.filter(id=lot_id).first()
             if lot:
@@ -26,5 +25,25 @@ class BidForm(forms.ModelForm):
                     raise forms.ValidationError("Sorry, this lot has expired")
                 current_price = lot.current_price or lot.start_price
                 if amount <= current_price:
-                    raise forms.ValidationError("Your bid must be higher than the current price.")
+                    raise forms.ValidationError("Your bid must be higher than current price.")
         return amount
+
+
+class LotForm(forms.ModelForm):
+    end_date = forms.DateTimeField()
+    start_price = forms.DecimalField()
+
+
+    class Meta:
+        model = Lot
+        fields = ("name", "description", "category", "end_date", "start_price", )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        end_date = cleaned_data.get("end_date")
+        start_price = cleaned_data.get("start_price")
+        if end_date <= timezone.now():
+            raise forms.ValidationError("You must set end_date higher than current time")
+        if start_price <= 0:
+            raise forms.ValidationError("Your start price must be higher than 0")
+        return cleaned_data

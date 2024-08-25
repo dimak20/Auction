@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from tendering.models import Comment
+
 from tendering.views import (
     index,
     InactiveLotListView,
@@ -12,6 +12,7 @@ from tendering.views import (
     LotDetailView,
     CommentCreateView,
     BidCreateView,
+    LotCreateView,
 )
 
 
@@ -24,6 +25,7 @@ urlpatterns = [
     path("lots/<int:pk>/", LotDetailView.as_view(), name="lot-detail"),
     path("lots/<int:pk>/comment/", CommentCreateView.as_view(), name="comment-create"),
     path("lots/<int:pk>/bid/", BidCreateView.as_view(), name="bid-create"),
+    path("lots/create/", LotCreateView.as_view(), name="lot-create"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
