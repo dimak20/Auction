@@ -1,13 +1,13 @@
 from http.client import HTTPResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
-from tendering.forms import CommentForm
-from tendering.models import Category, User, Lot, Comment
-
+from tendering.forms import CommentForm, BidForm
+from tendering.models import Category, User, Lot, Comment, Bid
 
 
 def index(request: HttpRequest) -> HTTPResponse:
@@ -92,6 +92,12 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 class LotDetailView(LoginRequiredMixin, generic.DetailView):
     model = Lot
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CommentForm()
+        context["bid_form"] = BidForm()
+        return context
+
 
 class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
@@ -106,3 +112,24 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
         comment.save()
         return redirect("tendering:lot-detail", pk=lot.id)
 
+
+class BidCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Bid
+    form_class = BidForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["lot_id"] = self.request.POST.get("lot_id")
+        return kwargs
+
+    def form_valid(self, form):
+        lot_id = self.request.POST.get("lot_id")
+        lot = get_object_or_404(Lot, id=lot_id)
+        bid = form.save(commit=False)
+        bid.lot = lot
+        bid.user = self.request.user
+        with transaction.atomic():
+            bid.save()
+            lot.current_price = bid.amount
+            lot.save()
+        return redirect("tendering:lot-detail", pk=lot.id)

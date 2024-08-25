@@ -26,6 +26,12 @@
     <li>No bids yet</li>
     {% endfor %}
   </ul>
+  <form action="{% url 'tendering:bid-create' pk=lot.id %}" method="post" novalidate>
+    {% csrf_token %}
+    {{ bid_form|crispy }}
+    <input type="hidden" name="lot_id" value="{{ lot.id }}">
+    <button class="btn btn-primary" type="submit">Set bid</button>
+  </form>
   <hr>
   <div class="comments-section">
       <h4 class="mb-3">Comments:</h4>
@@ -47,7 +53,7 @@
           {% csrf_token %}
           {{ form|crispy }}
           <input type="hidden" name="lot_id" value="{{ lot.id }}">
-          <button class="btn btn-primary" type="submit">Submit Comment</button>
+          <button class="btn btn-primary" type="submit">Submit comment</button>
         </form>
       </div>
   </div>
