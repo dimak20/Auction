@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Archived lots<a class="btn btn-primary" style="float:right" href="{% url '' %}">+</a></h1>
+  {% if inactive_lot_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Start_date</th>
+        <th>End_date</th>
+        <th>owner</th>
+      </tr>
+      {% for lot in inactive_lot_list %}
+        <tr>
+          <td>
+            {{ lot.id }}
+          </td>
+          <td>
+            {{ lot.name }}
+          </td>
+          <td>
+            {{ lot.category }}
+          </td>
+          <td>
+          {{ lot.start_date }}
+          </td>
+          <td>
+            {{ lot.end_date }}
+          </td>
+          <td>
+            {{ lot.owner }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no lots yet</p>
+  {% endif %}
+{% endblock %}
