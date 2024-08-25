@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>
+    {{ lot.name }}
+    <br>
+    Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
+    {% if user.id == lot.owner %}
+    <a href="{% url '' pk=car.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 't' pk=car.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+    {% endif %}
+  </h1>
+  <p>Category: ({{ lot.category.name }}</p>
+  <h3>Bidders:</h3>
+  <ul>
+    {% for bid in lot.bids.all%}
+      <li>
+      {{ bid.user.username }}: {{ bid.user.amount }} ({{ bid.user.created_time|date:"H:i d.m.Y" }})
+      </li>
+    {% empty %}
+    <li>No bids yet</li>
+    {% endfor %}
+  </ul>
+  <hr>
+  <div class="comments-section">
+      <h4 class="mb-3">Comments:</h4>
+      {% if lot.comments.all %}
+        <div class="list-group">
+          {% for comment in lot.comments.all %}
+            <div class="list-group-item">
+              <p class="mb-1"><strong>{{ comment.owner }}:</strong> {{ comment.created_time }}</p>
+              <p>{{ comment.text }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">No comments yet.</p>
+      {% endif %}
+      <div class="mt-4">
+        <h5>Add a Comment:</h5>
+        <form action="{% url 'tendering:comment-create' pk=lot.id %}" method="post" novalidate>
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="hidden" name="lot_id" value="{{ lot.id }}">
+          <button class="btn btn-primary" type="submit">Submit Comment</button>
+        </form>
+      </div>
+  </div>
+
+{% endblock %}

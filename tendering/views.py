@@ -26,7 +26,14 @@ def index(request: HttpRequest) -> HTTPResponse:
 class InactiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
-    queryset = Lot.objects.filter(is_active=False)
+    queryset = Lot.objects.filter(
+        is_active=False
+    ).select_related(
+        "category",
+        "owner"
+    ).prefetch_related(
+        "bids__user"
+    )
     context_object_name = "inactive_lot_list"
     template_name = "tendering/inactive_list.html"
 
@@ -34,7 +41,14 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
 class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
-    queryset = Lot.objects.filter(is_active=True)
+    queryset = Lot.objects.filter(
+        is_active=True
+    ).select_related(
+        "category",
+        "owner"
+    ).prefetch_related(
+        "bids__user"
+    )
     context_object_name = "active_lot_list"
     template_name = "tendering/active_list.html"
 
@@ -50,10 +64,29 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.object
-        my_active_lots = Lot.objects.filter(owner=user, is_active=True)
-        my_inactive_lots = Lot.objects.filter(owner=user, is_active=False)
-        participating_lots = Lot.objects.filter(bids__user=user, is_active=True)
+        lots = Lot.objects.filter(
+            owner=user
+        ).select_related(
+            "category",
+            "owner"
+        ).prefetch_related(
+            "bids__user"
+        )
+        my_active_lots = lots.filter(owner=user, is_active=True)
+        my_inactive_lots = lots.filter(owner=user, is_active=False)
+        participating_lots = Lot.objects.filter(
+            bids__user=user, is_active=True
+        ).select_related(
+            "owner",
+            "category"
+        ).prefetch_related(
+            "bids__user"
+        )
         context["my_active_lots"] = my_active_lots
         context["my_inactive_lots"] = my_inactive_lots
         context["participating_lots"] = participating_lots
         return context
+
+
+class LotDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Lot

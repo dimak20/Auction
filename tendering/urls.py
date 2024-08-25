@@ -7,6 +7,7 @@ from tendering.views import (
     ActiveLotListView,
     UserListView,
     UserDetailView,
+    LotDetailView,
 )
 
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path("active_lots/", ActiveLotListView.as_view(), name="lot-list"),
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/", UserDetailView.as_view(), name="user-detail"),
+    path("lots/<int:pk>/", LotDetailView.as_view(), name="user-detail"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

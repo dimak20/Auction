@@ -56,6 +56,7 @@ class Lot(models.Model):
         indexes = [
             models.Index(fields=["is_active"]),
             models.Index(fields=["start_date"]),
+            models.Index(fields=["end_date"]),
         ]
 
     def __str__(self) -> str:
@@ -76,6 +77,10 @@ class Bid(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bids")
     created_time = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+    class Meta:
+        ordering = ("-amount",)
 
     def __str__(self) -> str:
         return f"User: {self.user} (lot: {self.lot.name}, amount: {self.amount})"
