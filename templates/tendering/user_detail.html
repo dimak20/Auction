@@ -2,17 +2,36 @@
 
 {% block content %}
   <h1>User: {{ user.username }}</h1>
-  <p><strong>First name: </strong>{{ user.first_name  }}</p>
-  <p><strong>Last name: </strong>{{ user.last_name  }}</p>
+  <p><strong>First name: </strong>{{ user.first_name }}</p>
+  <p><strong>Last name: </strong>{{ user.last_name }}</p>
   <div class="ml-3">
-    <h3>Books:</h3>
-    {% for book in author.book_set.all %}
+    <h3>Lots where I am participating:</h3>
+    {% for lot in participating_lots %}
       <hr>
-      <p class="text-muted">{{ book.id }}</p>
-      <p>{{ book.title }} {{ book.price }}
+      <p>{{ lot.name }} {{ lot.current_price }}
+      {% if lot.get_highest_bidder and lot.get_highest_bidder.id == user.id %}
+        I am the leader now!
+      {% else %}
+        I am not the leader now.
+      {% endif %}
       </p>
     {% empty %}
-      <p>No books!</p>
+      <p>No active lots where I am bidder</p>
+    {% endfor %}
+    <h3>My active lots:</h3>
+    {% for lot in my_active_lots %}
+      <hr>
+      <p>{{ lot.name }}: {{ lot.current_price }} ({{ lot.category }})</p>
+      <p>{{ lot.start_date|date:"d M Y" }} - {{ lot.end_date|date:"d M Y" }}</p>
+    {% empty %}
+      <p>No my active lots</p>
+    {% endfor %}
+    <h3>My own lots:</h3>
+    {% for lot in  my_inactive_lots %}
+      <hr>
+      <p>{{ lot.name }}: {{ lot.current_price }} ({{ lot.category }})</p>
+    {% empty %}
+      <p>I have no my own lots yet</p>
     {% endfor %}
   </div>
 {% endblock %}

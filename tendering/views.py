@@ -46,3 +46,14 @@ class UserListView(LoginRequiredMixin, generic.ListView):
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.object
+        my_active_lots = Lot.objects.filter(owner=user, is_active=True)
+        my_inactive_lots = Lot.objects.filter(owner=user, is_active=False)
+        participating_lots = Lot.objects.filter(bids__user=user, is_active=True)
+        context["my_active_lots"] = my_active_lots
+        context["my_inactive_lots"] = my_inactive_lots
+        context["participating_lots"] = participating_lots
+        return context
