@@ -2,9 +2,10 @@ from http.client import HTTPResponse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
+from tendering.forms import CommentForm
 from tendering.models import Category, User, Lot, Comment
 
 
@@ -90,3 +91,18 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 
 class LotDetailView(LoginRequiredMixin, generic.DetailView):
     model = Lot
+
+
+class CommentCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        lot_id = self.request.POST.get("lot_id")
+        lot = get_object_or_404(Lot, id=lot_id)
+        comment = form.save(commit=False)
+        comment.lot = lot
+        comment.owner = self.request.user
+        comment.save()
+        return redirect("tendering:lot-detail", pk=lot.id)
+

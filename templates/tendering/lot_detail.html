@@ -7,20 +7,20 @@
     <br>
     Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
     {% if user.id == lot.owner %}
-    <a href="{% url '' pk=car.id %}" class="btn btn-danger link-to-page">
+    <a href="{% url '' pk=lot.id %}" class="btn btn-danger link-to-page">
       Delete
     </a>
-    <a href="{% url 't' pk=car.id %}" class="btn btn-secondary link-to-page">
+    <a href="{% url 't' pk=lot.id %}" class="btn btn-secondary link-to-page">
       Update
     </a>
     {% endif %}
   </h1>
-  <p>Category: ({{ lot.category.name }}</p>
+  <p>Category: {{ lot.category.name }}</p>
   <h3>Bidders:</h3>
   <ul>
     {% for bid in lot.bids.all%}
       <li>
-      {{ bid.user.username }}: {{ bid.user.amount }} ({{ bid.user.created_time|date:"H:i d.m.Y" }})
+      {{ bid.user.username }}: {{ bid.amount }} ({{ bid.user.created_time|date:"H:i d.m.Y" }})
       </li>
     {% empty %}
     <li>No bids yet</li>
