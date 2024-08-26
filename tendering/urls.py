@@ -15,6 +15,7 @@ from tendering.views import (
     LotCreateView,
     LotUpdateView,
     LotDeleteView,
+    UserCreateView,
 )
 
 
@@ -24,6 +25,7 @@ urlpatterns = [
     path("active_lots/", InactiveLotListView.as_view(), name="lot-list-inactive"),
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/", UserDetailView.as_view(), name="user-detail"),
+    path("users/create/", UserCreateView.as_view(), name="user-create"),
     path("lots/<int:pk>/", LotDetailView.as_view(), name="lot-detail"),
     path("lots/<int:pk>/comment/", CommentCreateView.as_view(), name="comment-create"),
     path("lots/<int:pk>/bid/", BidCreateView.as_view(), name="bid-create"),
