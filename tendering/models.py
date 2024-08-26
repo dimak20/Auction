@@ -71,6 +71,9 @@ class Lot(models.Model):
         highest_bid = self.bids.order_by("-amount").first()
         return highest_bid.amount if highest_bid else None
 
+    def get_absolute_url(self):
+        return reverse("tendering:lot-detail", args=[str(self.id)])
+
 
 class Bid(models.Model):
     lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="bids")
