@@ -47,3 +47,19 @@ class LotForm(forms.ModelForm):
         if start_price <= 0:
             raise forms.ValidationError("Your start price must be higher than 0")
         return cleaned_data
+
+
+class LotUpdateForm(forms.ModelForm):
+    end_date = forms.DateTimeField()
+
+
+    class Meta:
+        model = Lot
+        fields = ("description", "end_date", )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        end_date = cleaned_data.get("end_date")
+        if end_date <= timezone.now():
+            raise forms.ValidationError("You must set end_date higher than current time")
+        return cleaned_data

@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from tendering.forms import CommentForm, BidForm, LotForm
+from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
@@ -142,3 +142,10 @@ class LotCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "tendering/lot_form.html"
     form_class = LotForm
     success_url = reverse_lazy("tendering:lot-list")
+
+
+class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Lot
+    success_url = reverse_lazy("tendering:lot-list")
+    template_name = "tendering/lot_form.html"
+    form_class = LotUpdateForm

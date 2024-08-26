@@ -13,6 +13,7 @@ from tendering.views import (
     CommentCreateView,
     BidCreateView,
     LotCreateView,
+    LotUpdateView,
 )
 
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path("lots/<int:pk>/comment/", CommentCreateView.as_view(), name="comment-create"),
     path("lots/<int:pk>/bid/", BidCreateView.as_view(), name="bid-create"),
     path("lots/create/", LotCreateView.as_view(), name="lot-create"),
+    path("lots/<int:pk>/update/", LotUpdateView.as_view(), name="lot-update"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
