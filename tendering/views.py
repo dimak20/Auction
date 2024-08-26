@@ -149,3 +149,9 @@ class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("tendering:lot-list")
     template_name = "tendering/lot_form.html"
     form_class = LotUpdateForm
+
+
+class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Lot
+    success_url = reverse_lazy("tendering:lot-list")
+    template_name = "tendering/lot_confirm_delete.html"

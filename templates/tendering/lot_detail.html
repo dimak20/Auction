@@ -7,7 +7,7 @@
     <br>
     Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
     {% if user.id == lot.owner.id %}
-    <a href="{% url '' pk=lot.id %}" class="btn btn-danger link-to-page">
+    <a href="{% url 'tendering:lot-delete' pk=lot.id %}" class="btn btn-danger link-to-page">
       Delete
     </a>
     <a href="{% url 'tendering:lot-update' pk=lot.id %}" class="btn btn-secondary link-to-page">
