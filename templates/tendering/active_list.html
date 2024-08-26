@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Active lots<a class="btn btn-primary" style="float:right" href="{% url '' %}">+</a></h1>
+  <h1>Active lots<a class="btn btn-primary" style="float:right" href="{% url 'tendering:lot-create' %}">+</a></h1>
   {% if active_lot_list %}
     <table class="table">
       <tr>
@@ -15,7 +15,7 @@
       {% for lot in active_lot_list %}
         <tr>
           <td>
-            {{ lot.id }}
+            <a href="{{ lot.get_absolute_url }}">{{ lot.id }}</a>{{ lot.id }}
           </td>
           <td>
             {{ lot.name }}
