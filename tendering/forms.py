@@ -30,13 +30,16 @@ class BidForm(forms.ModelForm):
 
 
 class LotForm(forms.ModelForm):
-    end_date = forms.DateTimeField()
+    end_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'})
+    )
     start_price = forms.DecimalField()
 
 
     class Meta:
         model = Lot
         fields = ("name", "description", "category", "end_date", "start_price", )
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -50,7 +53,9 @@ class LotForm(forms.ModelForm):
 
 
 class LotUpdateForm(forms.ModelForm):
-    end_date = forms.DateTimeField()
+    end_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'})
+    )
 
 
     class Meta:
