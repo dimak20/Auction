@@ -157,5 +157,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "tendering/lot_confirm_delete.html"
 
 
-class UserCreateView:
-    pass
+class UserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = User
+    template_name = "tendering/user_form.html"
+    success_url = reverse_lazy("tendering:user-list")
