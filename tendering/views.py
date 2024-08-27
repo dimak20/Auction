@@ -1,7 +1,4 @@
-from audioop import reverse
 from http.client import HTTPResponse
-
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpRequest, HttpResponseForbidden
@@ -9,7 +6,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm, UserCreateForm, UserUpdateForm
+from tendering.forms import (
+    CommentForm,
+    BidForm,
+    LotForm,
+    LotUpdateForm,
+    UserCreateForm,
+    UserUpdateForm,
+    LotSearchForm
+)
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
@@ -45,16 +50,30 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
 class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
-    queryset = Lot.objects.filter(
-        is_active=True
-    ).select_related(
-        "category",
-        "owner"
-    ).prefetch_related(
-        "bids__user"
-    )
     context_object_name = "active_lot_list"
     template_name = "tendering/active_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ActiveLotListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = LotSearchForm (
+            initial={"name": name}
+        )
+
+    def get_queryset(self):
+        queryset = Lot.objects.filter(
+            is_active=True
+        ).select_related(
+            "category",
+            "owner"
+        ).prefetch_related(
+            "bids__user"
+        )
+        form = LotSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
+
 
 
 class UserListView(LoginRequiredMixin, generic.ListView):

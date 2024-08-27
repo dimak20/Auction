@@ -82,3 +82,16 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name")
+
+
+class LotSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "search by name"
+            }
+        )
+    )
