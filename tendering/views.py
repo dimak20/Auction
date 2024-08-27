@@ -154,10 +154,10 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
     model = Bid
     form_class = BidForm
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["lot_id"] = self.request.POST.get("lot_id")
-        return kwargs
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs["lot_id"] = self.request.POST.get("lot_id")
+    #     return kwargs
 
     def form_valid(self, form):
         lot_id = self.request.POST.get("lot_id")
@@ -170,6 +170,9 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
             lot.current_price = bid.amount
             lot.save()
         return redirect("tendering:lot-detail", pk=lot.id)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class LotCreateView(LoginRequiredMixin, generic.CreateView):
