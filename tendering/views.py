@@ -1,6 +1,7 @@
 from audioop import reverse
 from http.client import HTTPResponse
 
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpRequest
@@ -8,7 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm
+from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm, UserCreateForm
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
@@ -161,3 +162,4 @@ class UserCreateView(LoginRequiredMixin, generic.CreateView):
     model = User
     template_name = "tendering/user_form.html"
     success_url = reverse_lazy("tendering:user-list")
+    form_class = UserCreateForm

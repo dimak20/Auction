@@ -1,5 +1,7 @@
 from django import forms
-from tendering.models import Comment, Bid, Lot
+from django.contrib.auth.forms import UserCreationForm
+
+from tendering.models import Comment, Bid, Lot, User
 from django.utils import timezone
 
 
@@ -68,3 +70,13 @@ class LotUpdateForm(forms.ModelForm):
         if end_date <= timezone.now():
             raise forms.ValidationError("You must set end_date higher than current time")
         return cleaned_data
+
+
+class UserCreateForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ("first_name", "last_name")
+
+
+class UserUpdateForm(forms.ModelForm):
+    pass
