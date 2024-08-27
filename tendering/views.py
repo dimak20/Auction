@@ -159,7 +159,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def delete(self, request, *args, **kwargs):
         obj = self.object
-        if not self.has_pemission_to_delete(request, obj):
+        if not self.has_permission_to_delete(request, obj):
             return HttpResponseForbidden("You do not have permission to delete this lot.")
         return super().delete(request,*args, **kwargs)
 
