@@ -178,6 +178,12 @@ class LotCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = LotForm
     success_url = reverse_lazy("tendering:lot-list-active")
 
+    def form_valid(self, form):
+        lot = form.save(commit=False)
+        lot.current_price = None
+        lot.save()
+        return super().form_valid(form)
+
 
 class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Lot
