@@ -10,7 +10,7 @@
     <h3>Lots where I am participating:</h3>
     {% for lot in participating_lots %}
       <hr>
-      <p>{{ lot.name }} {{ lot.current_price }}
+      <p>{{ lot.name }} {{ lot.current_price }}.
       {% if lot.get_highest_bidder and lot.get_highest_bidder.id == user.id %}
         I am the leader now!
       {% else %}
