@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>User: {{ user.username }} <a href="{% url '' %}" style="float:right; margin-left: 10px">Delete</a>
+  <h1>User: {{ user.username }} <a href="{% url 'tendering:user-delete' pk=user.id %}" style="float:right; margin-left: 10px">Delete</a>
   <a href="{% url 'tendering:user-update' pk=user.id %}" style="float:right; margin-left: 10px" >Update</a>
   </h1>
   <p><strong>First name: </strong>{{ user.first_name }}</p>
