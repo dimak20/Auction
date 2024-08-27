@@ -172,3 +172,9 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
+
+class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = User
+    template_name = "tendering/user_confirm_delete.html"
+    success_url = reverse_lazy("tendering:user-list")
