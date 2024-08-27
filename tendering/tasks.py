@@ -1,6 +1,7 @@
 from celery import shared_task
 from django.utils import timezone
-from .models import Lot
+from tendering.models import Lot
+
 
 @shared_task
 def close_expired_lots():

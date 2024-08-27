@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "tendering",
     "crispy_forms",
     "crispy_bootstrap5",
-    "background_task"
+    "background_task",
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -143,11 +144,6 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-
-CELERY_BEAT_SCHEDULE = {
-    'close-expired-lots-every-180-seconds': {
-        'task': 'your_app.tasks.close_expired_lots',
-        'schedule': 180.00,
-    },
-}
-
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Kiev'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
