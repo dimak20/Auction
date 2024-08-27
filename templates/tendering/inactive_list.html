@@ -2,6 +2,10 @@
 
 {% block content %}
   <h1>Archived lots</h1>
+  <form method="get" action="" class="form-inline">
+    {{ search_form|crispy }}
+    <input type="submit" value="💩" class="btn btn-secondary">
+  </form>
   {% if inactive_lot_list %}
     <table class="table">
       <tr>
