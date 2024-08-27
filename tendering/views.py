@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm, UserCreateForm
+from tendering.forms import CommentForm, BidForm, LotForm, LotUpdateForm, UserCreateForm, UserUpdateForm
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
@@ -163,3 +163,12 @@ class UserCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "tendering/user_form.html"
     success_url = reverse_lazy("tendering:user-list")
     form_class = UserCreateForm
+
+
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    template_name = "tendering/user_update.html"
+    form_class = UserUpdateForm
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
