@@ -1,9 +1,8 @@
-from background_task import background
+from celery import shared_task
 from django.utils import timezone
 from .models import Lot
 
-
-@background(schedule=300)
+@shared_task
 def close_expired_lots():
     now = timezone.now()
     expired_lots = Lot.objects.filter(is_active=True, end_date__lte=now)
