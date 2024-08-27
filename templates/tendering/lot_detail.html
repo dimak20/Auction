@@ -16,6 +16,11 @@
     {% endif %}
   </h1>
   <p>Category: {{ lot.category.name }}</p>
+  {%  if lot.current_price %}
+    <h3>Current price: {{ lot.current_price|floatformat:2 }}</h3>
+  {% else %}
+    <h3>Start price: {{ lot.start_price|floatformat:2 }}</h3>
+  {%  endif %}
   <h3>Bidders:</h3>
   <ul>
     {% for bid in lot.bids.all%}

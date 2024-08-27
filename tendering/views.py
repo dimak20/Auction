@@ -172,7 +172,13 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
         return redirect("tendering:lot-detail", pk=lot.id)
 
     def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))
+        lot_id = self.kwargs.get('pk')
+        lot = get_object_or_404(Lot, id=lot_id)
+        context = {
+            'lot': lot,
+            'bid_form': form,
+        }
+        return render(self.request, 'tendering/lot_detail.html', context)
 
 
 class LotCreateView(LoginRequiredMixin, generic.CreateView):
