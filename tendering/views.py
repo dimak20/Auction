@@ -4,7 +4,7 @@ from http.client import HTTPResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -156,6 +156,16 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Lot
     success_url = reverse_lazy("tendering:lot-list-active")
     template_name = "tendering/lot_confirm_delete.html"
+
+    def delete(self, request, *args, **kwargs):
+        obj = self.object
+        if not self.has_pemission_to_delete(request, obj):
+            return HttpResponseForbidden("You do not have permission to delete this lot.")
+        return super().delete(request,*args, **kwargs)
+
+
+    def has_permission_to_delete(self, request, obj):
+        return request.user == obj.owner
 
 
 class UserCreateView(LoginRequiredMixin, generic.CreateView):
