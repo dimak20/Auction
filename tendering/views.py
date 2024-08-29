@@ -1,5 +1,5 @@
 from http.client import HTTPResponse
-
+from django.db.models import Sum
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -26,12 +26,14 @@ def index(request: HttpRequest) -> HTTPResponse:
     num_lots = Lot.objects.count()
     num_active_lots = Lot.objects.filter(is_active=True).count()
     num_bids = Bid.objects.count()
+    sum_lots = Lot.objects.aggregate(total=Sum("current_price"))
     context = {
         "num_categories": num_categories,
         "num_users": num_users,
         "num_lots": num_lots,
         "num_active_lots": num_active_lots,
         "num_bids": num_bids,
+        "sum_lots": sum_lots["total"]
     }
     return render(request, "pages/index.html", context=context)
 

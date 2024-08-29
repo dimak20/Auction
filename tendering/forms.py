@@ -73,8 +73,14 @@ class LotUpdateForm(forms.ModelForm):
 
 
 class UserCreateForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Password",
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Confirm Password",
+    )
 
     class Meta:
         model = User
