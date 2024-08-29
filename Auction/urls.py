@@ -23,8 +23,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("tendering.urls", namespace="tendering")),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("", include('admin_soft.urls'))
-
+    path('', include('tendering.urls', namespace='tendering')),
+    path('admin-soft/', include('admin_soft.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,4 +1,6 @@
 from http.client import HTTPResponse
+
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpRequest, HttpResponseForbidden
@@ -23,14 +25,28 @@ def index(request: HttpRequest) -> HTTPResponse:
     num_users = User.objects.count()
     num_lots = Lot.objects.count()
     num_active_lots = Lot.objects.filter(is_active=True).count()
+    num_bids = Bid.objects.count()
     context = {
         "num_categories": num_categories,
         "num_users": num_users,
         "num_lots": num_lots,
-        "num_active_lots": num_active_lots
+        "num_active_lots": num_active_lots,
+        "num_bids": num_bids,
     }
     return render(request, "pages/index.html", context=context)
 
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('tendering:index')
+    else:
+        form = UserCreateForm()
+
+    return render(request, 'admin_soft/accounts/register.html', {'form': form})
 
 class InactiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot

@@ -2,9 +2,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-
+from tendering import views
 from tendering.views import (
     index,
+    register,
     InactiveLotListView,
     ActiveLotListView,
     UserListView,
@@ -36,6 +37,7 @@ urlpatterns = [
     path("lots/create/", LotCreateView.as_view(), name="lot-create"),
     path("lots/<int:pk>/update/", LotUpdateView.as_view(), name="lot-update"),
     path("lots/<int:pk>/delete/", LotDeleteView.as_view(), name="lot-delete"),
+    path('accounts/register/', register, name='register'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
