@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -73,6 +74,19 @@ class Lot(models.Model):
 
     def get_absolute_url(self):
         return reverse("tendering:lot-detail", args=[str(self.id)])
+
+    def get_progress_percentage(self):
+
+        start_date = self.start_date
+        end_date = self.end_date
+        current_date = timezone.now()
+        if start_date >= end_date:
+            return 100.0 if current_date >= end_date else 0.0
+        total_duration = (end_date - start_date).total_seconds()
+        elapsed_duration = (current_date - start_date).total_seconds()
+        progress = (elapsed_duration / total_duration) * 100
+        progress = max(0.0, min(progress, 100.0))
+        return round(progress, 2)
 
 
 class Bid(models.Model):

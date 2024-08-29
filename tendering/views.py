@@ -20,6 +20,9 @@ from tendering.forms import (
 from tendering.models import Category, User, Lot, Comment, Bid
 
 
+
+
+
 def index(request: HttpRequest) -> HTTPResponse:
     num_categories = Category.objects.count()
     num_users = User.objects.count()
@@ -29,7 +32,8 @@ def index(request: HttpRequest) -> HTTPResponse:
     sum_lots = Lot.objects.aggregate(total=Sum("current_price"))
     lot_participants = Lot.objects.annotate(p_c=Count("participant"))
     avg_bids = lot_participants.aggregate(avg=Avg("p_c"))
-
+    recent_bids = Bid.objects.order_by("-created_time")[:5]
+    # for bid in recent_bids
     context = {
         "num_categories": num_categories,
         "num_users": num_users,
