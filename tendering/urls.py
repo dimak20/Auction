@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-
-from tendering import views
+from admin_soft import views as soft_views
 from tendering.views import (
     index,
     register,
@@ -38,6 +37,8 @@ urlpatterns = [
     path("lots/<int:pk>/update/", LotUpdateView.as_view(), name="lot-update"),
     path("lots/<int:pk>/delete/", LotDeleteView.as_view(), name="lot-delete"),
     path('accounts/register/', register, name='register'),
+    path('accounts/logout/', soft_views.logout_view, name='logout'),
+    path('accounts/login/', soft_views.UserLoginView.as_view(), name='login'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
