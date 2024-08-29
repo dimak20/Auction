@@ -35,13 +35,15 @@ def index(request: HttpRequest) -> HTTPResponse:
     recent_bids = Bid.objects.order_by("-created_time")[:5]
     bid_data = []
     for bid in recent_bids:
-        bid["percentage"] = bid.lot.get_progress_percentage()
+        num_participants = bid.lot.participant.count()
         bid_info = {
+            "bid_lot": bid.lot.name,
             "bid_id": bid.id,
             "amount": bid.amount,
             "user": bid.user.username,
             "created_time": bid.created_time,
-            "percentage": bid.lot.get_progress_percentage(),
+            "percentage": int(bid.lot.get_progress_percentage()),
+            "bidders": num_participants
         }
         bid_data.append(bid_info)
     context = {
