@@ -33,7 +33,17 @@ def index(request: HttpRequest) -> HTTPResponse:
     lot_participants = Lot.objects.annotate(p_c=Count("participant"))
     avg_bids = lot_participants.aggregate(avg=Avg("p_c"))
     recent_bids = Bid.objects.order_by("-created_time")[:5]
-    # for bid in recent_bids
+    bid_data = []
+    for bid in recent_bids:
+        bid["percentage"] = bid.lot.get_progress_percentage()
+        bid_info = {
+            "bid_id": bid.id,
+            "amount": bid.amount,
+            "user": bid.user.username,
+            "created_time": bid.created_time,
+            "percentage": bid.lot.get_progress_percentage(),
+        }
+        bid_data.append(bid_info)
     context = {
         "num_categories": num_categories,
         "num_users": num_users,
@@ -41,7 +51,13 @@ def index(request: HttpRequest) -> HTTPResponse:
         "num_active_lots": num_active_lots,
         "num_bids": num_bids,
         "sum_lots": sum_lots["total"],
-        "avg_bids": round(avg_bids["avg"], 2)
+        "avg_bids": round(avg_bids["avg"], 2),
+        "first_bid": bid_data[0] if len(bid_data) > 0 else None,
+        "second_bid": bid_data[1] if len(bid_data) > 1 else None,
+        "third_bid": bid_data[2] if len(bid_data) > 2 else None,
+        "fourth_bid": bid_data[3] if len(bid_data) > 3 else None,
+        "fifth_bid": bid_data[4] if len(bid_data) > 4 else None,
+
     }
     return render(request, "pages/index.html", context=context)
 
