@@ -27,10 +27,14 @@
             {% else %}
             <a href="{% url 'logout' %}" class="nav-link text-body font-weight-bold px-0">
             {% endif %}
-            
+
               <i class="fa fa-user me-sm-1"></i>
-              <span class="d-sm-inline d-none me-3">Logout</span>
+{#              <span class="d-sm-inline d-none me-3">Logout</span>#}
             </a>
+          <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link p-0" style="text-decoration: none;">Logout</button>
+          </form>
           </li>
         {% else %}
           <li class="nav-item d-flex align-items-center">
@@ -48,7 +52,7 @@
           {% else %}
           <a href="{% url 'password_change' %}" class="nav-link text-body font-weight-bold px-0">
           {% endif %}
-            <span class="d-sm-inline d-none me-3">Change Password</span>
+{#            <span class="d-sm-inline d-none me-3">Change Password</span>#}
           </a>
         </li>
 

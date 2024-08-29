@@ -29,7 +29,7 @@ def index(request: HttpRequest) -> HTTPResponse:
         "num_lots": num_lots,
         "num_active_lots": num_active_lots
     }
-    return render(request, "tendering/index.html", context=context)
+    return render(request, "pages/index.html", context=context)
 
 
 class InactiveLotListView(LoginRequiredMixin, generic.ListView):
