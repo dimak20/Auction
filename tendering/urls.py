@@ -23,8 +23,8 @@ from tendering.views import (
 
 urlpatterns = [
     path("", index, name="index"),
-    path("inactive_lots/", ActiveLotListView.as_view(), name="lot-list-active"),
-    path("active_lots/", InactiveLotListView.as_view(), name="lot-list-inactive"),
+    path("active_lots/", ActiveLotListView.as_view(), name="lot-list-active"),
+    path("inactive_lots/", InactiveLotListView.as_view(), name="lot-list-inactive"),
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/", UserDetailView.as_view(), name="user-detail"),
     path("users/<int:pk>/update/", UserUpdateView.as_view(), name="user-update"),
