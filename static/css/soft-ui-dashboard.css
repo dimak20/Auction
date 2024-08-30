@@ -17301,3 +17301,10 @@ pre[class*="language-"] {
     overflow: auto !important; } }
 
 /*# sourceMappingURL=soft-ui-dashboard.css.map */
+.pagination .page-item.active .page-link {
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+}

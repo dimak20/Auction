@@ -1,5 +1,5 @@
 from http.client import HTTPResponse
-from django.db.models import Sum, Avg, Count
+from django.db.models import Sum, Avg, Count, Max
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -138,7 +138,15 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
 class UserListView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "tendering/tables.html"
-    paginate_by = 5
+    paginate_by = 8
+
+    def get_queryset(self):
+        queryset = User.objects.prefetch_related("lots")
+        queryset = queryset.annotate(bids_count=Count("bids"))
+        queryset = queryset.annotate(last_bid=Max("bids__created_time"))
+        return queryset
+
+
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = User
