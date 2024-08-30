@@ -137,7 +137,7 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
 
 class UserListView(LoginRequiredMixin, generic.ListView):
     model = User
-    template_name = "tendering/user_list.html"
+    template_name = "tendering/tables.html"
     paginate_by = 5
 
 class UserDetailView(LoginRequiredMixin, generic.DetailView):
