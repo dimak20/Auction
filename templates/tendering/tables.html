@@ -30,9 +30,15 @@
                   <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
+                        {% if user.avatar %}
+                          <div>
+                            <img src="{{ user.avatar.url }}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                        {% else %}
                         <div>
                           <img src="{% static 'img/img-user-list-2.png' %}" class="avatar avatar-sm me-3" alt="user1">
                         </div>
+                        {% endif %}
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm">{{ user.username }}</h6>
                           <p class="text-xs text-secondary mb-0">{{ user.first_name }} {{ user.last_name }}</p>
