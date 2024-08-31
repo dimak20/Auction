@@ -162,9 +162,7 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
             "owner"
         ).prefetch_related(
             "bids__user"
-        )
-        my_active_lots = lots.filter(owner=user, is_active=True)
-        my_inactive_lots = lots.filter(owner=user, is_active=False)
+        ).order_by("is_active", "-start_date")
         participating_lots = Lot.objects.filter(
             bids__user=user, is_active=True
         ).select_related(
@@ -174,8 +172,7 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
             "bids__user"
         )
         lots_num = lots.count()
-        context["my_active_lots"] = my_active_lots
-        context["my_inactive_lots"] = my_inactive_lots
+        context["my_lots"] = lots
         context["participating_lots"] = participating_lots
         context["lots_num"] = lots_num
         return context
