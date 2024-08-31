@@ -30,9 +30,10 @@ class ModelsTests(TestCase):
         self.assertEqual(str(category), category.name)
 
     def test_user_str(self):
-        test_user = get_user_model().objects.create(
+        password = "test12345"
+        test_user = get_user_model().objects.create_user(
             username="test_username_test",
-            password="test12345",
+            password=password,
             first_name="test_first",
             last_name="test_last"
         )
@@ -40,6 +41,7 @@ class ModelsTests(TestCase):
             str(test_user),
             f"{test_user.username}: {test_user.first_name} {test_user.last_name}"
         )
+        self.assertTrue(test_user.check_password(password))
 
     def test_comment_str(self):
         comment = Comment.objects.create(
