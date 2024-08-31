@@ -56,6 +56,7 @@ class Lot(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through="Bid")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lots")
+    photo = models.ImageField(upload_to="tenders/", blank=True, null=True)
 
 
     class Meta:

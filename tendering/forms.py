@@ -101,9 +101,21 @@ class UserCreateForm(forms.ModelForm):
         return user
 
 class UserUpdateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date-local', 'class': 'form-control'})
+    )
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email")
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "date_of_birth",
+            "location",
+            "bio",
+            "avatar"
+        )
 
 
 class LotSearchForm(forms.Form):
