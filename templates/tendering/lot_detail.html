@@ -16,6 +16,18 @@
   <p style="font-family: 'Playfair Display', serif; font-size: x-large">Category: {{ lot.category.name }}</p>
   </h1>
   <br>
+  <div class="card mb-4">
+  {% if lot.photo %}
+    <img src="{{ lot.photo.url }}" class="card-img-top img-fluid" style="max-width: 50%;
+    height: auto;" alt="Lot photo">
+  {% endif %}
+    <div class="card-header">
+      Description:
+    </div>
+    <div class="card-body">
+      <p>{{ lot.description }}</p>
+    </div>
+  </div>
   <h3>
     Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
   </h3>

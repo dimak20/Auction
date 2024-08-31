@@ -349,13 +349,18 @@
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
+                          <div class="progress-info d-flex justify-content-between mb-2">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">{{ second_bid.percentage }}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-{{ second_bid.percentage }}" role="progressbar" aria-valuenow="{{ second_bid.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-gradient-info" role="progressbar"
+                              style="width: {{ second_bid.percentage }}%;"
+                              aria-valuenow="{{ second_bid.percentage }}" 
+                              aria-valuemin="0"
+                              aria-valuemax="100">
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -381,13 +386,18 @@
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
+                          <div class="progress-info d-flex justify-content-between mb-2">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">{{ third_bid.percentage }}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-success w-{{ third_bid.percentage }}" role="progressbar" aria-valuenow="{{ third_bid.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-gradient-info" role="progressbar"
+                              style="width: {{ third_bid.percentage }}%;"
+                              aria-valuenow="{{ third_bid.percentage }}" 
+                              aria-valuemin="0"
+                              aria-valuemax="100">
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -413,13 +423,18 @@
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
+                          <div class="progress-info d-flex justify-content-between mb-2">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">{{ fourth_bid.percentage }}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-success w-{{ fourth_bid.percentage }}" role="progressbar" aria-valuenow="{{ fourth_bid.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-gradient-info" role="progressbar"
+                              style="width: {{ fourth_bid.percentage }}%;"
+                              aria-valuenow="{{ fourth_bid.percentage }}" 
+                              aria-valuemin="0"
+                              aria-valuemax="100">
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -445,17 +460,20 @@
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
+                          <div class="progress-info d-flex justify-content-between mb-2">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">{{ fifth_bid.percentage }}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-{{ fifth_bid.percentage }}" role="progressbar" aria-valuenow="{{ fifth_bid.percentage }}" aria-valuemin="0" aria-valuemax="25"></div>
+                            <div class="progress-bar bg-gradient-info" role="progressbar"
+                              style="width: {{ fifth_bid.percentage }}%;"
+                              aria-valuenow="{{ fifth_bid.percentage }}" 
+                              aria-valuemin="0"
+                              aria-valuemax="100">
+                            </div>
                           </div>
                         </div>
-                      </td>
-                    </tr>
                       </td>
                     </tr>
                   </tbody>

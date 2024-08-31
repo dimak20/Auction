@@ -106,7 +106,8 @@ class UserCreateForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     date_of_birth = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date-local', 'class': 'form-control'})
+        widget=forms.DateInput(attrs={'type': 'date-local', 'class': 'form-control'}),
+        required=False
     )
     class Meta:
         model = User
