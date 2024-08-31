@@ -44,6 +44,9 @@ class Comment(models.Model):
     class Meta:
         ordering = ("created_time", )
 
+    def __str__(self) -> str:
+        return f"{self.owner}: {self.text}. Lot: {self.lot}"
+
 
 class Lot(models.Model):
     name = models.CharField(max_length=63)
