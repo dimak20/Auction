@@ -98,6 +98,8 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
             "owner"
         ).prefetch_related(
             "bids__user"
+        ).order_by(
+            "-start_date"
         )
         form = LotSearchForm(self.request.GET)
         if form.is_valid():
