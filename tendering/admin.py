@@ -19,7 +19,9 @@ class CategoryAdmin(admin.ModelAdmin):
 class UserAdmin(UserAdmin):
     list_display = UserAdmin.list_display
     list_filter = UserAdmin.list_filter
-    fieldsets = UserAdmin.fieldsets
+    fieldsets = UserAdmin.fieldsets + (
+        ("Additional info", {"fields": ("first_name", "last_name",)}),
+    )
     add_fieldsets = UserAdmin.add_fieldsets + (
         ("Additional info", {"fields": ("first_name", "last_name",)}),
     )
