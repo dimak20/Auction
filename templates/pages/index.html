@@ -317,13 +317,18 @@
                       </td>
                       <td class="align-middle">
                         <div class="progress-wrapper w-75 mx-auto">
-                          <div class="progress-info">
+                          <div class="progress-info d-flex justify-content-between mb-2">
                             <div class="progress-percentage">
                               <span class="text-xs font-weight-bold">{{ first_bid.percentage }}%</span>
                             </div>
                           </div>
                           <div class="progress">
-                            <div class="progress-bar bg-gradient-info w-{{ first_bid.percentage }}" role="progressbar" aria-valuenow="{{ first_bid.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-gradient-info" role="progressbar"
+                              style="width: {{ first_bid.percentage }}%;"
+                              aria-valuenow="{{ first_bid.percentage }}" 
+                              aria-valuemin="0"
+                              aria-valuemax="100">
+                            </div>
                           </div>
                         </div>
                       </td>
