@@ -291,3 +291,12 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = User
     template_name = "tendering/user_confirm_delete.html"
     success_url = reverse_lazy("tendering:user-list")
+
+    def delete(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if not self.has_permission_to_delete(request, obj):
+            return HttpResponseForbidden("You do not have permission to delete this user.")
+        return super().delete(request, *args, **kwargs)
+
+    def has_permission_to_delete(self, request, obj):
+        return request.user == obj
