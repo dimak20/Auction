@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from tendering.models import Comment, Bid, Lot, User
 from django.utils import timezone
@@ -56,6 +57,12 @@ class LotForm(forms.ModelForm):
         if start_price <= 0:
             raise forms.ValidationError("Your start price must be higher than 0")
         return cleaned_data
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get("photo")
+        if photo and photo.size > 5 * 1024 * 1024:  # 5 MB
+            raise ValidationError("File is too big. Max size - 5 MB")
+        return photo
 
 
 class LotUpdateForm(forms.ModelForm):
@@ -121,6 +128,12 @@ class UserUpdateForm(forms.ModelForm):
             "bio",
             "avatar"
         )
+
+    def clean_avatar(self):
+        avatar = self.cleaned_data.get("avatar")
+        if avatar and avatar.size > 5 * 1024 * 1024:  # 5 MB
+            raise ValidationError("File is too big. Max size - 5 MB")
+        return avatar
 
 
 class LotSearchForm(forms.Form):
