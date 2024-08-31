@@ -252,9 +252,11 @@ class LotCreateView(LoginRequiredMixin, generic.CreateView):
 
 class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Lot
-    success_url = reverse_lazy("tendering:lot-list-active")
     template_name = "tendering/lot_form.html"
     form_class = LotUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy("tendering:lot-detail", kwargs={"pk": self.object.id})
 
 
 class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
