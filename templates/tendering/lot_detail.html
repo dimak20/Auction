@@ -5,23 +5,27 @@
 {% block content %}
   <h1>
     {{ lot.name }}
-    <br>
-    Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
     {% if user.id == lot.owner.id %}
-    <a href="{% url 'tendering:lot-delete' pk=lot.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-    <a href="{% url 'tendering:lot-update' pk=lot.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
+      <a href="{% url 'tendering:lot-delete' pk=lot.id %}" class="btn btn-danger link-to-page" style="float: right">
+        Delete
+      </a>
+      <a href="{% url 'tendering:lot-update' pk=lot.id %}" class="btn btn-secondary link-to-page" style="float: right; margin-right: 30px">
+        Update
+      </a>
     {% endif %}
+  <p style="font-family: 'Playfair Display', serif; font-size: x-large">Category: {{ lot.category.name }}</p>
   </h1>
-  <p>Category: {{ lot.category.name }}</p>
+  <br>
+  <h3>
+    Term: {{ lot.start_date|date:"H:i d.m.Y" }} - {{ lot.end_date|date:"H:i d.m.Y" }}
+  </h3>
+  <br>
   {%  if lot.current_price %}
     <h3>Current price: {{ lot.current_price|floatformat:2 }}</h3>
   {% else %}
     <h3>Start price: {{ lot.start_price|floatformat:2 }}</h3>
   {%  endif %}
+  <br>
   <h3>Bidders:</h3>
   <ul>
     {% for bid in lot.bids.all%}

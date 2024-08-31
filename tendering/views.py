@@ -173,9 +173,11 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
         ).prefetch_related(
             "bids__user"
         )
+        lots_num = lots.count()
         context["my_active_lots"] = my_active_lots
         context["my_inactive_lots"] = my_inactive_lots
         context["participating_lots"] = participating_lots
+        context["lots_num"] = lots_num
         return context
 
 

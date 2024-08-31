@@ -6,6 +6,10 @@ from django.utils import timezone
 
 
 class CommentForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=forms.Textarea(attrs={"class": "form-control"}),
+        label=""
+    )
     class Meta:
         model = Comment
         fields = ["text"]
