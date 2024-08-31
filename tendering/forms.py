@@ -40,7 +40,7 @@ class LotForm(forms.ModelForm):
 
     class Meta:
         model = Lot
-        fields = ("name", "description", "category", "end_date", "start_price", )
+        fields = ("name", "description", "category", "end_date", "start_price", "photo" )
 
 
     def clean(self):
