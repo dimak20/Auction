@@ -7,6 +7,7 @@ from django.db.models import Sum, Avg, Count, Max, QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
 
 from tendering.forms import (
@@ -114,6 +115,16 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
+def close_expired_lots():
+    now = timezone.now()
+    expired_lots = Lot.objects.filter(is_active=True, end_date__lte=now)
+    for lot in expired_lots:
+        lot.is_active = False
+        highest_bid = lot.bids.order_by("-amount").first()
+        if highest_bid:
+            lot.owner = highest_bid.user
+        lot.save()
+
 class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
@@ -135,6 +146,7 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self) -> QuerySet:
+        close_expired_lots()
         queryset = (
             Lot.objects.filter(is_active=True)
             .select_related("category", "owner")
