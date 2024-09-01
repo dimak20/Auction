@@ -3,8 +3,8 @@ from http.client import HTTPResponse
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.db.models import Sum, Avg, Count, Max
-from django.http import HttpRequest, HttpResponseForbidden
+from django.db.models import Sum, Avg, Count, Max, QuerySet
+from django.http import HttpRequest, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -67,7 +67,7 @@ def index(request: HttpRequest) -> HTTPResponse:
     return render(request, "pages/index.html", context=context)
 
 
-def register(request):
+def register(request) -> HTTPResponse:
     if request.method == "POST":
         form = UserCreateForm(request.POST)
         if form.is_valid():
@@ -90,7 +90,7 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "inactive_lot_list"
     template_name = "tendering/inactive_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(
             InactiveLotListView,
             self
@@ -99,7 +99,7 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = LotSearchForm(initial={"name": name})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = (
             Lot.objects.filter(is_active=False)
             .select_related("category", "owner")
@@ -120,7 +120,12 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "active_lot_list"
     template_name = "tendering/active_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(
+            self,
+            *,
+            object_list=None,
+            **kwargs
+    ) -> dict:
         context = super(
             ActiveLotListView,
             self
@@ -129,7 +134,7 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = LotSearchForm(initial={"name": name})
         return context
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = (
             Lot.objects.filter(is_active=True)
             .select_related("category", "owner")
@@ -148,7 +153,7 @@ class UserListView(LoginRequiredMixin, generic.ListView):
     template_name = "tendering/tables.html"
     paginate_by = 8
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = User.objects.prefetch_related("lots")
         queryset = queryset.annotate(
             bids_count=Count("bids")
@@ -163,7 +168,7 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = "pages/profile.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         user = self.object
         lots = (
@@ -187,7 +192,7 @@ class UserDetailView(LoginRequiredMixin, generic.DetailView):
 class LotDetailView(LoginRequiredMixin, generic.DetailView):
     model = Lot
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
         context["bid_form"] = BidForm()
@@ -198,7 +203,7 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
     form_class = CommentForm
 
-    def form_valid(self, form):
+    def form_valid(self, form) -> HttpResponseRedirect:
         lot_id = self.request.POST.get("lot_id")
         lot = get_object_or_404(Lot, id=lot_id)
         comment = form.save(commit=False)
@@ -217,7 +222,7 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
     #     kwargs["lot_id"] = self.request.POST.get("lot_id")
     #     return kwargs
 
-    def form_valid(self, form):
+    def form_valid(self, form) -> HttpResponseRedirect:
         lot_id = self.request.POST.get("lot_id")
         lot = get_object_or_404(Lot, id=lot_id)
         bid = form.save(commit=False)
@@ -229,7 +234,7 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
             lot.save()
         return redirect("tendering:lot-detail", pk=lot.id)
 
-    def form_invalid(self, form):
+    def form_invalid(self, form) -> HTTPResponse:
         lot_id = self.kwargs.get("pk")
         lot = get_object_or_404(Lot, id=lot_id)
         context = {
@@ -249,7 +254,7 @@ class LotCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = LotForm
     success_url = reverse_lazy("tendering:lot-list-active")
 
-    def form_valid(self, form):
+    def form_valid(self, form) -> None:
         lot = form.save(commit=False)
         lot.current_price = None
         lot.owner = self.request.user
@@ -262,7 +267,7 @@ class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "tendering/lot_form.html"
     form_class = LotUpdateForm
 
-    def get_success_url(self):
+    def get_success_url(self) -> HTTPResponse:
         return reverse_lazy(
             "tendering:lot-detail",
             kwargs={"pk": self.object.id}
@@ -274,7 +279,12 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("tendering:lot-list-active")
     template_name = "tendering/lot_confirm_delete.html"
 
-    def delete(self, request, *args, **kwargs):
+    def delete(
+            self,
+            request,
+            *args,
+            **kwargs
+    ) -> HttpResponseForbidden | None:
         obj = self.object
         if not self.has_permission_to_delete(request, obj):
             return HttpResponseForbidden(
@@ -282,7 +292,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
             )
         return super().delete(request, *args, **kwargs)
 
-    def has_permission_to_delete(self, request, obj):
+    def has_permission_to_delete(self, request, obj) -> bool:
         return request.user == obj.owner
 
 
@@ -298,7 +308,7 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "tendering/user_update.html"
     form_class = UserUpdateForm
 
-    def get_success_url(self):
+    def get_success_url(self) -> HTTPResponse:
         return self.object.get_absolute_url()
 
 
@@ -307,7 +317,12 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "tendering/user_confirm_delete.html"
     success_url = reverse_lazy("tendering:user-list")
 
-    def delete(self, request, *args, **kwargs):
+    def delete(
+            self,
+            request,
+            *args,
+            **kwargs
+    ) -> HttpResponseForbidden | None:
         obj = self.get_object()
         if not self.has_permission_to_delete(request, obj):
             return HttpResponseForbidden(
@@ -315,5 +330,5 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
             )
         return super().delete(request, *args, **kwargs)
 
-    def has_permission_to_delete(self, request, obj):
+    def has_permission_to_delete(self, request, obj) -> bool:
         return request.user == obj
