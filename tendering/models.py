@@ -22,7 +22,10 @@ class User(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
+    avatar = models.ImageField(
+        upload_to="avatars/",
+        blank=True, null=True
+    )
 
     class Meta:
         ordering = ("username",)
@@ -31,14 +34,23 @@ class User(AbstractUser):
         return f"{self.username}: {self.first_name} {self.last_name}"
 
     def get_absolute_url(self):
-        return reverse("tendering:user-detail", args=[str(self.id)])
+        return reverse(
+            "tendering:user-detail",
+            args=[str(self.id)]
+        )
 
 
 class Comment(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="comments"
     )
-    lot = models.ForeignKey("Lot", on_delete=models.CASCADE, related_name="comments")
+    lot = models.ForeignKey(
+        "Lot",
+        on_delete=models.CASCADE,
+        related_name="comments"
+    )
     text = models.TextField(max_length=1000)
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -53,20 +65,34 @@ class Lot(models.Model):
     name = models.CharField(max_length=63)
     description = models.TextField(max_length=1000)
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, related_name="lots"
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="lots"
     )
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
     start_price = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
     current_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
     )
-    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through="Bid")
+    participant = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through="Bid"
+    )
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="lots"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="lots"
     )
-    photo = models.ImageField(upload_to="tenders/", blank=True, null=True)
+    photo = models.ImageField(
+        upload_to="tenders/",
+        blank=True, null=True
+    )
 
     class Meta:
         ordering = ("is_active", "-start_date")
@@ -106,9 +132,15 @@ class Lot(models.Model):
 
 
 class Bid(models.Model):
-    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="bids")
+    lot = models.ForeignKey(
+        Lot,
+        on_delete=models.CASCADE,
+        related_name="bids"
+    )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bids"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="bids"
     )
     created_time = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)

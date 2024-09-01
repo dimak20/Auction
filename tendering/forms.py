@@ -28,7 +28,9 @@ class BidForm(forms.ModelForm):
             lot = Lot.objects.filter(id=lot_id).first()
             if lot:
                 if lot.end_date <= timezone.now():
-                    raise forms.ValidationError("Sorry, this lot has expired")
+                    raise forms.ValidationError(
+                        "Sorry, this lot has expired"
+                    )
                 current_price = lot.current_price or lot.start_price
                 if amount <= current_price:
                     raise forms.ValidationError(
@@ -47,7 +49,14 @@ class LotForm(forms.ModelForm):
 
     class Meta:
         model = Lot
-        fields = ("name", "description", "category", "end_date", "start_price", "photo")
+        fields = (
+            "name",
+            "description",
+            "category",
+            "end_date",
+            "start_price",
+            "photo"
+        )
 
     def clean(self):
         cleaned_data = super().clean()
@@ -58,20 +67,27 @@ class LotForm(forms.ModelForm):
                 "You must set end_date higher than current time"
             )
         if start_price <= 0:
-            raise forms.ValidationError("Your start price must be higher than 0")
+            raise forms.ValidationError(
+                "Your start price must be higher than 0"
+            )
         return cleaned_data
 
     def clean_photo(self):
         photo = self.cleaned_data.get("photo")
         if photo and photo.size > 5 * 1024 * 1024:  # 5 MB
-            raise ValidationError("File is too big. Max size - 5 MB")
+            raise ValidationError(
+                "File is too big. Max size - 5 MB"
+            )
         return photo
 
 
 class LotUpdateForm(forms.ModelForm):
     end_date = forms.DateTimeField(
         widget=forms.DateTimeInput(
-            attrs={"type": "datetime-local", "class": "form-control"}
+            attrs={
+                "type": "datetime-local",
+                "class": "form-control"
+            }
         )
     )
 
@@ -104,7 +120,12 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = (
+            "username",
+            "email",
+            "password1",
+            "password2"
+        )
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -123,7 +144,12 @@ class UserCreateForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     date_of_birth = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date-local", "class": "form-control"}),
+        widget=forms.DateInput(
+            attrs={
+                "type": "date-local",
+                "class": "form-control"
+            }
+        ),
         required=False,
     )
 

@@ -18,7 +18,13 @@ from tendering.forms import (
     UserUpdateForm,
     LotSearchForm,
 )
-from tendering.models import Category, User, Lot, Comment, Bid
+from tendering.models import (
+    Category,
+    User,
+    Lot,
+    Comment,
+    Bid
+)
 
 
 def index(request: HttpRequest) -> HTTPResponse:
@@ -71,7 +77,11 @@ def register(request):
     else:
         form = UserCreateForm()
 
-    return render(request, "admin_soft/accounts/register.html", {"form": form})
+    return render(
+        request,
+        "admin_soft/accounts/register.html",
+        {"form": form}
+    )
 
 
 class InactiveLotListView(LoginRequiredMixin, generic.ListView):
@@ -81,7 +91,10 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
     template_name = "tendering/inactive_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(InactiveLotListView, self).get_context_data(**kwargs)
+        context = super(
+            InactiveLotListView,
+            self
+        ).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = LotSearchForm(initial={"name": name})
         return context
@@ -95,7 +108,9 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
         )
         form = LotSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
         return queryset
 
 
@@ -106,7 +121,10 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     template_name = "tendering/active_list.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(ActiveLotListView, self).get_context_data(**kwargs)
+        context = super(
+            ActiveLotListView,
+            self
+        ).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = LotSearchForm(initial={"name": name})
         return context
@@ -119,7 +137,9 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
         )
         form = LotSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
         return queryset
 
 
@@ -130,8 +150,12 @@ class UserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         queryset = User.objects.prefetch_related("lots")
-        queryset = queryset.annotate(bids_count=Count("bids"))
-        queryset = queryset.annotate(last_bid=Max("bids__created_time"))
+        queryset = queryset.annotate(
+            bids_count=Count("bids")
+        )
+        queryset = queryset.annotate(
+            last_bid=Max("bids__created_time")
+        )
         return queryset
 
 
@@ -212,7 +236,11 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
             "lot": lot,
             "bid_form": form,
         }
-        return render(self.request, "tendering/lot_detail.html", context)
+        return render(
+            self.request,
+            "tendering/lot_detail.html",
+            context
+        )
 
 
 class LotCreateView(LoginRequiredMixin, generic.CreateView):
@@ -235,7 +263,10 @@ class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = LotUpdateForm
 
     def get_success_url(self):
-        return reverse_lazy("tendering:lot-detail", kwargs={"pk": self.object.id})
+        return reverse_lazy(
+            "tendering:lot-detail",
+            kwargs={"pk": self.object.id}
+        )
 
 
 class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
