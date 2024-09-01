@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tendering', '0004_alter_bid_options_alter_lot_start_date_and_more'),
+        ("tendering", "0004_alter_bid_options_alter_lot_start_date_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='lot',
-            name='current_price',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True),
+            model_name="lot",
+            name="current_price",
+            field=models.DecimalField(
+                blank=True, decimal_places=2, max_digits=10, null=True
+            ),
         ),
     ]

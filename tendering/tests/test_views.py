@@ -29,8 +29,7 @@ class PublicUserView(TestCase):
 class PrivateLotsView(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            username="test_username",
-            password="test_password"
+            username="test_username", password="test_password"
         )
         self.category = Category.objects.create(name="test_category")
         self.end_date = timezone.now() + timedelta(days=1)
@@ -64,14 +63,8 @@ class PrivateLotsView(TestCase):
         response = self.client.get(ACTIVE_LOTS_URL)
         self.assertEqual(response.status_code, 200)
         lots = Lot.objects.all()
-        self.assertEqual(
-            list(response.context["active_lot_list"]),
-            list(lots)
-        )
-        self.assertTemplateUsed(
-            response,
-            "tendering/active_list.html"
-        )
+        self.assertEqual(list(response.context["active_lot_list"]), list(lots))
+        self.assertTemplateUsed(response, "tendering/active_list.html")
 
     def retrieve_lot_detail(self):
         lot = Lot.objects.create(
@@ -81,66 +74,40 @@ class PrivateLotsView(TestCase):
             category=self.category,
             end_date=self.end_date,
             start_price=20,
-            owner=self.user
+            owner=self.user,
         )
-        response = self.client.get(
-            reverse(
-                "tendering:lot-detail",
-                args=[100])
-        )
+        response = self.client.get(reverse("tendering:lot-detail", args=[100]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.context["lot"],
-            lot
-        )
+        self.assertEqual(response.context["lot"], lot)
+
 
 class PrivateUserView(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            username="test_username_username",
-            password="test_password"
+            username="test_username_username", password="test_password"
         )
         self.client.force_login(self.user)
 
     def test_retrieve_users(self):
         get_user_model().objects.create_user(
-            username="username_retrieve_1",
-            password="password"
+            username="username_retrieve_1", password="password"
         )
         get_user_model().objects.create_user(
-            username="username_retrieve_2",
-            password="password"
+            username="username_retrieve_2", password="password"
         )
         response = self.client.get(USER_LIST_URL)
         self.assertEqual(response.status_code, 200)
         users = get_user_model().objects.all()
         users_model = User.objects.all()
-        self.assertEqual(
-            list(response.context["user_list"]),
-            list(users)
-        )
-        self.assertEqual(
-            list(response.context["user_list"]),
-            list(users_model)
-        )
-        self.assertTemplateUsed(
-            response,
-            "tendering/tables.html"
-        )
+        self.assertEqual(list(response.context["user_list"]), list(users))
+        self.assertEqual(list(response.context["user_list"]), list(users_model))
+        self.assertTemplateUsed(response, "tendering/tables.html")
 
     def test_retrieve_user_detail(self):
         user = get_user_model().objects.create_user(
-            id=10,
-            username="username_test_details",
-            password="password"
+            id=10, username="username_test_details", password="password"
         )
         response = self.client.get(reverse("tendering:user-detail", args=[10]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.context["user"],
-            user
-        )
-        self.assertTemplateUsed(
-            response,
-            "pages/profile.html"
-        )
+        self.assertEqual(response.context["user"], user)
+        self.assertTemplateUsed(response, "pages/profile.html")

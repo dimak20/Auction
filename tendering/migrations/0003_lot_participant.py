@@ -7,13 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tendering', '0002_remove_lot_participant_bid'),
+        ("tendering", "0002_remove_lot_participant_bid"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='lot',
-            name='participant',
-            field=models.ManyToManyField(through='tendering.Bid', to=settings.AUTH_USER_MODEL),
+            model_name="lot",
+            name="participant",
+            field=models.ManyToManyField(
+                through="tendering.Bid", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

@@ -7,15 +7,14 @@ class AdminSiteTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
-            username="super_username",
-            password="super_password1234"
+            username="super_username", password="super_password1234"
         )
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create(
             username="username",
             password="password",
             phone_number="380999999999",
-            location="test_location"
+            location="test_location",
         )
 
     def test_user_location_listed(self):

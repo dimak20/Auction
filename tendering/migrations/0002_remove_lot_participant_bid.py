@@ -8,22 +8,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tendering', '0001_initial'),
+        ("tendering", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='lot',
-            name='participant',
+            model_name="lot",
+            name="participant",
         ),
         migrations.CreateModel(
-            name='Bid',
+            name="Bid",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_time', models.DateTimeField(auto_now_add=True)),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('lot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bids', to='tendering.lot')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bids', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_time", models.DateTimeField(auto_now_add=True)),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "lot",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bids",
+                        to="tendering.lot",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bids",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

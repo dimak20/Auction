@@ -13,8 +13,7 @@ from tendering.models import Lot, Category, Comment
 class FormsTest(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            username="test_username_forms",
-            password="test_password"
+            username="test_username_forms", password="test_password"
         )
         self.category = Category.objects.create(name="name")
         self.client.force_login(self.user)
@@ -24,7 +23,7 @@ class FormsTest(TestCase):
             category=self.category,
             end_date=timezone.now() + timedelta(days=1),
             start_price=Decimal(20),
-            owner=self.user
+            owner=self.user,
         )
 
     def test_create_lot(self):
@@ -34,7 +33,7 @@ class FormsTest(TestCase):
             "category": self.category.id,
             "end_date": timezone.now() + timedelta(days=1),
             "start_price": Decimal(10),
-            "owner": self.user.id
+            "owner": self.user.id,
         }
         form = LotForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -48,15 +47,11 @@ class FormsTest(TestCase):
         self.assertEqual(new_lot.owner.id, form_data["owner"])
 
     def test_create_bid(self):
-        form_data = {
-            "lot": self.lot.id,
-            "user": self.user.id,
-            "amount": Decimal(30)
-        }
+        form_data = {"lot": self.lot.id, "user": self.user.id, "amount": Decimal(30)}
         form_data_invalid = {
             "lot": self.lot.id,
             "user": self.user.id,
-            "amount": Decimal(1)
+            "amount": Decimal(1),
         }
         form = BidForm(data=form_data)
         invalid_form = BidForm(data=form_data_invalid)

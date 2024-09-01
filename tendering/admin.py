@@ -10,9 +10,15 @@ admin.site.register(Comment)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", ]
-    list_filter = ["name", ]
-    search_fields = ["name", ]
+    list_display = [
+        "name",
+    ]
+    list_filter = [
+        "name",
+    ]
+    search_fields = [
+        "name",
+    ]
 
 
 @admin.register(User)
@@ -23,5 +29,8 @@ class UserAdmin(UserAdmin):
         ("Additional info", {"fields": ("phone_number", "location")}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ("Additional info", {"fields": ("first_name", "last_name", "phone_number", "location")}),
+        (
+            "Additional info",
+            {"fields": ("first_name", "last_name", "phone_number", "location")},
+        ),
     )

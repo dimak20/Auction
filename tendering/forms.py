@@ -8,9 +8,9 @@ from django.utils import timezone
 
 class CommentForm(forms.ModelForm):
     text = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "form-control"}),
-        label=""
+        widget=forms.Textarea(attrs={"class": "form-control"}), label=""
     )
+
     class Meta:
         model = Comment
         fields = ["text"]
@@ -32,28 +32,32 @@ class BidForm(forms.ModelForm):
                     raise forms.ValidationError("Sorry, this lot has expired")
                 current_price = lot.current_price or lot.start_price
                 if amount <= current_price:
-                    raise forms.ValidationError("Your bid must be higher than current price.")
+                    raise forms.ValidationError(
+                        "Your bid must be higher than current price."
+                    )
         return amount
 
 
 class LotForm(forms.ModelForm):
     end_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'})
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local", "class": "form-control"}
+        )
     )
     start_price = forms.DecimalField()
 
-
     class Meta:
         model = Lot
-        fields = ("name", "description", "category", "end_date", "start_price", "photo" )
-
+        fields = ("name", "description", "category", "end_date", "start_price", "photo")
 
     def clean(self):
         cleaned_data = super().clean()
         end_date = cleaned_data.get("end_date")
         start_price = cleaned_data.get("start_price")
         if end_date <= timezone.now():
-            raise forms.ValidationError("You must set end_date higher than current time")
+            raise forms.ValidationError(
+                "You must set end_date higher than current time"
+            )
         if start_price <= 0:
             raise forms.ValidationError("Your start price must be higher than 0")
         return cleaned_data
@@ -67,19 +71,25 @@ class LotForm(forms.ModelForm):
 
 class LotUpdateForm(forms.ModelForm):
     end_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'})
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local", "class": "form-control"}
+        )
     )
-
 
     class Meta:
         model = Lot
-        fields = ("description", "end_date", )
+        fields = (
+            "description",
+            "end_date",
+        )
 
     def clean(self):
         cleaned_data = super().clean()
         end_date = cleaned_data.get("end_date")
         if end_date <= timezone.now():
-            raise forms.ValidationError("You must set end_date higher than current time")
+            raise forms.ValidationError(
+                "You must set end_date higher than current time"
+            )
         return cleaned_data
 
 
@@ -95,7 +105,7 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ("username", "email", "password1", "password2")
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -111,11 +121,13 @@ class UserCreateForm(forms.ModelForm):
             user.save()
         return user
 
+
 class UserUpdateForm(forms.ModelForm):
     date_of_birth = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date-local', 'class': 'form-control'}),
-        required=False
+        widget=forms.DateInput(attrs={"type": "date-local", "class": "form-control"}),
+        required=False,
     )
+
     class Meta:
         model = User
         fields = (
@@ -126,7 +138,7 @@ class UserUpdateForm(forms.ModelForm):
             "date_of_birth",
             "location",
             "bio",
-            "avatar"
+            "avatar",
         )
 
     def clean_avatar(self):
@@ -141,9 +153,5 @@ class LotSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "search by name"
-            }
-        )
+        widget=forms.TextInput(attrs={"placeholder": "search by name"}),
     )

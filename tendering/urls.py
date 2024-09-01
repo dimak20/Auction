@@ -36,9 +36,9 @@ urlpatterns = [
     path("lots/create/", LotCreateView.as_view(), name="lot-create"),
     path("lots/<int:pk>/update/", LotUpdateView.as_view(), name="lot-update"),
     path("lots/<int:pk>/delete/", LotDeleteView.as_view(), name="lot-delete"),
-    path('accounts/register/', register, name='register'),
-    path('accounts/logout/', soft_views.logout_view, name='logout'),
-    path('accounts/login/', soft_views.UserLoginView.as_view(), name='login'),
+    path("accounts/register/", register, name="register"),
+    path("accounts/logout/", soft_views.logout_view, name="logout"),
+    path("accounts/login/", soft_views.UserLoginView.as_view(), name="login"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
