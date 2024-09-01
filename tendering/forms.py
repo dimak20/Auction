@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from tendering.models import Comment, Bid, Lot, User
-from django.utils import timezone
 
 
 class CommentForm(forms.ModelForm):

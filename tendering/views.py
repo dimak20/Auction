@@ -1,8 +1,9 @@
 from http.client import HTTPResponse
-from django.db.models import Sum, Avg, Count, Max
+
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Sum, Avg, Count, Max
 from django.http import HttpRequest, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy

@@ -1,7 +1,8 @@
+from admin_soft import views as soft_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from admin_soft import views as soft_views
+
 from tendering.views import (
     index,
     register,
@@ -19,7 +20,6 @@ from tendering.views import (
     UserUpdateView,
     UserDeleteView,
 )
-
 
 urlpatterns = [
     path("", index, name="index"),
