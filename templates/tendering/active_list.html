@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Active lots<a class="btn btn-primary" style="float:right" href="{% url 'tendering:lot-create' %}">+</a></h1>
+  <form method="get" action="" class="form-inline">
+    {{ search_form|crispy }}
+    <input type="submit" value="⚖️" class="btn btn-secondary">
+  </form>
+  {% if active_lot_list %}
+    <table class="table">
+      <tr>
+        <th>Lot</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Start_date</th>
+        <th>End_date</th>
+        <th>owner</th>
+      </tr>
+      {% for lot in active_lot_list %}
+        <tr>
+          <td>
+            <div class="d-flex px-2 py-1">
+              {% if lot.photo %}
+                <div>
+                  <img src="{{ lot.photo.url }}" class="avatar avatar-sm me-3" alt="user1">
+                </div>
+              {% else %}
+                <div>
+                  <img src="{% static 'img/no-image-icon.png' %}" class="avatar avatar-sm me-3" alt="user1">
+                </div>
+              {% endif %}
+            </div>
+          </td>
+          <td>
+            <a href="{{ lot.get_absolute_url }}" class="text-primary">{{ lot.name }}</a>
+          </td>
+          <td>
+            {{ lot.category }}
+          </td>
+          <td>
+          {{ lot.start_date }}
+          </td>
+          <td>
+            {{ lot.end_date }}
+          </td>
+          <td>
+            {{ lot.owner }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no active lots</p>
+  {% endif %}
+{% endblock %}
