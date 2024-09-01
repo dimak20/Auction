@@ -19,6 +19,7 @@ class PublicLotsView(TestCase):
         res_inactive_list = self.client.get(INACTIVE_LOTS_URL)
         self.assertNotEqual(res_inactive_list.status_code, 200)
 
+
 class PublicUserView(TestCase):
     def test_login_required(self):
         res = self.client.get(USER_LIST_URL)
