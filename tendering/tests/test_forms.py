@@ -1,13 +1,13 @@
 from datetime import timedelta
 from decimal import Decimal
-from django import forms
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from tendering.forms import LotForm, BidForm
-from tendering.models import Lot, Category, User, Comment, Bid
+from tendering.forms import LotForm, BidForm, CommentForm
+from tendering.models import Lot, Category, Comment
 
 
 class FormsTest(TestCase):
@@ -62,3 +62,19 @@ class FormsTest(TestCase):
         invalid_form = BidForm(data=form_data_invalid)
         self.assertTrue(form.is_valid())
         self.assertFalse(invalid_form.full_clean())
+
+    def test_create_comment(self):
+        text = "very long text"
+        form_data = {
+            "text": text,
+        }
+        form = CommentForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        comment = form.save(commit=False)
+        comment.lot = self.lot
+        comment.owner = self.user
+        comment.save()
+        comment = Comment.objects.get(text=text)
+        self.assertEqual(comment.owner.id, self.user.id)
+        self.assertEqual(comment.lot.id, self.lot.id)
+        self.assertEqual(comment.text, text)

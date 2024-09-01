@@ -11,6 +11,7 @@ ACTIVE_LOTS_URL = reverse("tendering:lot-list-active")
 INACTIVE_LOTS_URL = reverse("tendering:lot-list-inactive")
 USER_LIST_URL = reverse("tendering:user-list")
 
+
 class PublicLotsView(TestCase):
     def test_login_required(self):
         res_active_list = self.client.get(ACTIVE_LOTS_URL)
