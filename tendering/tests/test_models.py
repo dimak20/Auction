@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
 
 from tendering.models import Lot, Category, Comment, Bid
 
@@ -15,7 +16,7 @@ class ModelsTests(TestCase):
             last_name="test_last"
         )
         self.category = Category.objects.create(name="test")
-        self.date = datetime.now() + timedelta(days=1)
+        self.date = timezone.now() + timedelta(days=1)
         self.lot = Lot.objects.create(
             name="test",
             description="test_description",
