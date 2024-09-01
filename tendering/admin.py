@@ -17,9 +17,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    list_display = UserAdmin.list_display
+    list_display = UserAdmin.list_display + ("phone_number", "location")
     list_filter = UserAdmin.list_filter
-    fieldsets = UserAdmin.fieldsets
+    fieldsets = UserAdmin.fieldsets + (
+        ("Additional info", {"fields": ("phone_number", "location")}),
+    )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ("Additional info", {"fields": ("first_name", "last_name",)}),
+        ("Additional info", {"fields": ("first_name", "last_name", "phone_number", "location")}),
     )
