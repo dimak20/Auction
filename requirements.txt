@@ -13,6 +13,7 @@ click-repl==0.3.0
 colorama==0.4.6
 crispy-bootstrap5==2024.2
 cron-descriptor==1.4.5
+dj-database-url==2.2.0
 Django==5.1
 django-admin-soft-dashboard==1.0.12
 django-background-tasks==1.2.8
@@ -28,6 +29,8 @@ pathspec==0.12.1
 pillow==10.4.0
 platformdirs==4.2.2
 prompt_toolkit==3.0.47
+psycopg2==2.9.9
+psycopg2-binary==2.9.9
 python-crontab==3.2.0
 python-dateutil==2.9.0.post0
 redis==3.5.3
@@ -35,6 +38,8 @@ setuptools==73.0.1
 six==1.16.0
 sqlparse==0.5.1
 types-python-dateutil==2.9.0.20240821
+typing_extensions==4.12.2
 tzdata==2024.1
 vine==5.1.0
 wcwidth==0.2.13
+whitenoise==6.7.0

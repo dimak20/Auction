@@ -58,7 +58,7 @@ def index(request: HttpRequest) -> HTTPResponse:
         "num_active_lots": num_active_lots,
         "num_bids": num_bids,
         "sum_lots": sum_lots["total"],
-        "avg_bids": round(avg_bids["avg"], 2),
+        "avg_bids": round(avg_bids["avg"], 2) if avg_bids["avg"] else 0,
         "first_bid": bid_data[0] if len(bid_data) > 0 else None,
         "second_bid": bid_data[1] if len(bid_data) > 1 else None,
         "third_bid": bid_data[2] if len(bid_data) > 2 else None,
