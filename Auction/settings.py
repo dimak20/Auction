@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "background_task",
     "django_celery_beat",
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -153,7 +154,17 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+
+if DEBUG:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+else:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_S3_REGION_NAME = "eu-north-1"
+    AWS_STORAGE_BUCKET_NAME = "auctionbucketdimak"
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 
 ADMIN_URL = "admin/"
