@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "https://auction-7arl.onrender.com", "auction-7arl.onrender.com"]
 
@@ -166,5 +166,13 @@ else:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage"
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 ADMIN_URL = "admin/"
