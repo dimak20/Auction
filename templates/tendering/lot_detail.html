@@ -49,10 +49,18 @@
   </ul>
   <form action="{% url 'tendering:bid-create' pk=lot.id %}" method="post" novalidate>
     {% csrf_token %}
-    {{ bid_form|crispy }}
-    <input type="hidden" name="lot_id" value="{{ lot.id }}">
-    <button class="btn btn-primary" type="submit">Set bid</button>
-  </form>
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ bid_form|crispy }}
+            </div>
+            <input type="hidden" name="lot_id" value="{{ lot.id }}">
+            <button class="btn btn-primary btn-block" type="submit">Set bid</button>
+        </div>
+    </div>
+</form>
+
+
   <hr>
   <div class="comments-section">
       <h4 class="mb-3">Comments:</h4>
