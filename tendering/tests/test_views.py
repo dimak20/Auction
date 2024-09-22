@@ -80,6 +80,71 @@ class PrivateLotsView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["lot"], lot)
 
+    def test_search_lot(self):
+        lots = [
+            Lot(
+                name=f"list_test{i}",
+                description=f"test_description{i}",
+                category=self.category,
+                end_date=self.end_date,
+                start_price=f"{i + 5}",
+                owner=self.user
+            )
+            for i in range(20)
+        ]
+        lots.extend(
+            [
+                Lot(
+                    name=f"lt_test{i}",
+                    description=f"test_description{i}",
+                    category=self.category,
+                    end_date=self.end_date,
+                    start_price=f"{i + 5}",
+                    owner=self.user
+                )
+                for i in range(20)
+            ]
+        )
+        Lot.objects.bulk_create(lots)
+        filter_name = "list"
+        filtered_lots = Lot.objects.filter(name__icontains=filter_name)[:5]
+        response = self.client.get(ACTIVE_LOTS_URL + f"?name={filter_name}")
+        self.assertEqual(
+            list(
+                response.context_data["active_lot_list"]
+            ),
+            list(filtered_lots)
+        )
+
+    def test_lot_pagination(self):
+        lots = [
+            Lot(
+                name=f"list_test{i}",
+                description=f"test_description{i}",
+                category=self.category,
+                end_date=self.end_date,
+                start_price=f"{i + 5}",
+                owner=self.user
+            )
+            for i in range(20)
+        ]
+        Lot.objects.bulk_create(lots)
+        pagination_number = 5
+        response = self.client.get(ACTIVE_LOTS_URL + "?page=2")
+        paginated_lots = list(Lot.objects.all()[pagination_number:10])
+        self.assertEqual(
+            list(
+                response.context_data["active_lot_list"]
+            ),
+            paginated_lots
+        )
+
+    # def test_update_lot(self):
+    #     payload = {
+    #         "description": "new description"
+    #     }
+    #     response = self.client.post()
+
 
 class PrivateUserView(TestCase):
     def setUp(self):
