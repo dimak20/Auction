@@ -1,5 +1,6 @@
 from http.client import HTTPResponse
 
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -125,6 +126,7 @@ def close_expired_lots():
             lot.owner = highest_bid.user
         lot.save()
 
+
 class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     model = Lot
     paginate_by = 5
@@ -229,11 +231,6 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
     model = Bid
     form_class = BidForm
 
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs["lot_id"] = self.request.POST.get("lot_id")
-    #     return kwargs
-
     def form_valid(self, form) -> HttpResponseRedirect:
         lot_id = self.request.POST.get("lot_id")
         lot = get_object_or_404(Lot, id=lot_id)
@@ -285,6 +282,12 @@ class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
             kwargs={"pk": self.object.id}
         )
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().owner.pk != request.user.pk and not request.user.is_superuser:
+            messages.info(request, "This is not your lot")
+            return redirect("tendering:index")
+        return super().dispatch(request, *args, **kwargs)
+
 
 class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Lot
@@ -297,7 +300,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
             *args,
             **kwargs
     ) -> HttpResponseForbidden | None:
-        obj = self.object
+        obj = self.get_object()
         if not self.has_permission_to_delete(request, obj):
             return HttpResponseForbidden(
                 "You do not have permission to delete this lot."
@@ -305,10 +308,10 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
         return super().delete(request, *args, **kwargs)
 
     def has_permission_to_delete(self, request, obj) -> bool:
-        return request.user == obj.owner
+        return request.user == obj.owner or request.user.is_superuser
 
 
-class UserCreateView(LoginRequiredMixin, generic.CreateView):
+class UserCreateView(generic.CreateView):
     model = User
     template_name = "tendering/user_form.html"
     success_url = reverse_lazy("tendering:user-list")
@@ -319,6 +322,12 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     template_name = "tendering/user_update.html"
     form_class = UserUpdateForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.object.pk != request.user.pk and not request.user.is_superuser:
+            messages.info(request, "This is not your profile")
+            return redirect("tendering:index")
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self) -> HTTPResponse:
         return self.object.get_absolute_url()
@@ -343,4 +352,4 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
         return super().delete(request, *args, **kwargs)
 
     def has_permission_to_delete(self, request, obj) -> bool:
-        return request.user == obj
+        return request.user == obj or request.user.is_superuser
