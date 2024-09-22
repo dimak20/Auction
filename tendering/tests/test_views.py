@@ -1,9 +1,8 @@
-from datetime import timedelta
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.timezone import timedelta
 
 from tendering.models import Lot, Category, User
 
@@ -28,7 +27,7 @@ class PublicUserView(TestCase):
 
 class PrivateLotsView(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
+        self.user = get_user_model().objects.create_superuser(
             username="test_username", password="test_password"
         )
         self.category = Category.objects.create(name="test_category")
@@ -139,11 +138,20 @@ class PrivateLotsView(TestCase):
             paginated_lots
         )
 
-    # def test_update_lot(self):
-    #     payload = {
-    #         "description": "new description"
-    #     }
-    #     response = self.client.post()
+    def test_update_lot(self):
+        payload = {
+            "description": "new description",
+            "end_date": timezone.now() + timedelta(days=1)
+        }
+        self.client.post(
+            reverse(
+                "tendering:lot-update",
+                args=[self.lot.pk]),
+            data=payload
+        )
+        lot = Lot.objects.get(pk=self.lot.pk)
+        self.assertEqual(lot.description, payload.get("description"))
+        self.assertEqual(lot.end_date, payload.get("end_date"))
 
 
 class PrivateUserView(TestCase):
