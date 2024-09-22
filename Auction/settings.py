@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tendering",
+    # 3d party:
     "crispy_forms",
     "crispy_bootstrap5",
     "background_task",
     "django_celery_beat",
-    "storages"
+    "storages",
+    #my apps
+    "tendering",
 ]
 
 MIDDLEWARE = [
@@ -153,7 +155,6 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-
 
 if DEBUG:
     MEDIA_URL = "/media/"
