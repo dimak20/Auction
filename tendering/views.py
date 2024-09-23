@@ -324,7 +324,7 @@ class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = UserUpdateForm
 
     def dispatch(self, request, *args, **kwargs):
-        if self.object.pk != request.user.pk and not request.user.is_superuser:
+        if self.get_object().pk != request.user.pk and not request.user.is_superuser:
             messages.info(request, "This is not your profile")
             return redirect("tendering:index")
         return super().dispatch(request, *args, **kwargs)
