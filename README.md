@@ -1,5 +1,5 @@
 # Auction 🔨
-> Student project 
+> Django project 
 
 This is a custom Auction service that provides you to create lots, make comments and set bids
 
