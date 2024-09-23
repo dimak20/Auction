@@ -6,6 +6,7 @@ from django.urls import path
 from tendering.views import (
     index,
     register,
+    rules,
     InactiveLotListView,
     ActiveLotListView,
     UserListView,
@@ -39,6 +40,7 @@ urlpatterns = [
     path("accounts/register/", register, name="register"),
     path("accounts/logout/", soft_views.logout_view, name="logout"),
     path("accounts/login/", soft_views.UserLoginView.as_view(), name="login"),
+    path("rules", rules, name="rules"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

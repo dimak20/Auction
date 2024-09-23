@@ -353,3 +353,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def has_permission_to_delete(self, request, obj) -> bool:
         return request.user == obj or request.user.is_superuser
+
+
+def rules(request:HttpRequest) -> HTTPResponse:
+    return render(request, "tendering/rules.html")
