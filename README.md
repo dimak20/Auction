@@ -3,29 +3,55 @@
 
 This is a custom Auction service that provides you to create lots, make comments and set bids
 
+You can see deployed project by the link below
 > https://auction-7arl.onrender.com/
+
+Use this credentials to log in:
+
+**Username:** `test`
+
+**Password:** `Pass12__`
 ## Getting started
 
-Firstly, clone repository  
-Then, create .venv environment  
-Install requirments.txt by the command below  
-
-
+1. Clone repository  
 ```shell
 git clone https://github.com/dimak20/auction.git
 cd auction
+```
+2. Then, create and activate .venv environment  
+```shell
 python -m venv env
-source env/bin/activate  # For Windows: `env\Scripts\activate`
+```
+For Unix system
+```shell
+source venv/bin/activate
+```
+
+For Windows system
+
+```shell
+venv\Scripts\activate
+```
+
+3. Install requirments.txt by the command below  
+
+
+```shell
 pip install -r requirements.txt
 ```
 
-You need to make migrations
+4. You need to make migrations
 ```shell
 python manage.py makemigrations
 python manage.py migrate
 ```
+5. (Optional) Also you can load fixture data
+```shell
+python manage.py loaddata auction_data.json
+```
 
-And finally, create superuser and start server
+
+6. And finally, create superuser and run server
 
 ```shell
 python manage.py createsuperuser
@@ -35,7 +61,7 @@ python manage.py runserver # http://127.0.0.1:8000/
 
 ### Project configuration
 
-Your project need to have this structure
+Your project needs to have this structure
 
 
 ```plaintext
