@@ -97,7 +97,7 @@ Project
 
 * Creation users
 * Creation lots with set price and uploading photo
-* Makin comments and bids under the lot detail
+* Making comments and bids under the lot detail
 * Customising your profile by photo, bio and other information
 * Tracking statistics on the home page
 
