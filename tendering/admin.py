@@ -10,15 +10,9 @@ admin.site.register(Comment)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = [
-        "name",
-    ]
-    list_filter = [
-        "name",
-    ]
-    search_fields = [
-        "name",
-    ]
+    list_display = ["name",]
+    list_filter = ["name",]
+    search_fields = ["name",]
 
 
 @admin.register(User)

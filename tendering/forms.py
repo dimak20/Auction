@@ -1,8 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 from tendering.models import Comment, Bid, Lot, User
+
+PHOTO_SIZE_CONSTRAINT = 5 * 1024 * 1024  # 5 MB
 
 
 class CommentForm(forms.ModelForm):
@@ -16,7 +19,6 @@ class CommentForm(forms.ModelForm):
 
 
 class BidForm(forms.ModelForm):
-
     class Meta:
         model = Bid
         fields = ["amount"]
@@ -24,18 +26,16 @@ class BidForm(forms.ModelForm):
     def clean_amount(self):
         amount = self.cleaned_data.get("amount")
         lot_id = self.data.get("lot_id")
-        if lot_id:
-            lot = Lot.objects.filter(id=lot_id).first()
-            if lot:
-                if lot.end_date <= timezone.now():
-                    raise forms.ValidationError(
-                        "Sorry, this lot has expired"
-                    )
-                current_price = lot.current_price or lot.start_price
-                if amount <= current_price:
-                    raise forms.ValidationError(
-                        "Your bid must be higher than current price."
-                    )
+        lot = get_object_or_404(Lot, id=lot_id)
+        if lot.end_date <= timezone.now():
+            raise forms.ValidationError(
+                "Sorry, this lot has expired"
+            )
+        current_price = lot.current_price or lot.start_price
+        if amount <= current_price:
+            raise forms.ValidationError(
+                "Your bid must be higher than current price."
+            )
         return amount
 
 
@@ -74,9 +74,10 @@ class LotForm(forms.ModelForm):
 
     def clean_photo(self):
         photo = self.cleaned_data.get("photo")
-        if photo and photo.size > 5 * 1024 * 1024:  # 5 MB
+        if photo and photo.size > PHOTO_SIZE_CONSTRAINT:
             raise ValidationError(
-                "File is too big. Max size - 5 MB"
+                f"File is too big. "
+                f"Max size - {round(PHOTO_SIZE_CONSTRAINT / 1000000)} MB"
             )
         return photo
 
