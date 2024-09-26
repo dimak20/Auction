@@ -169,8 +169,10 @@ class UserUpdateForm(forms.ModelForm):
 
     def clean_avatar(self):
         avatar = self.cleaned_data.get("avatar")
-        if avatar and avatar.size > 5 * 1024 * 1024:  # 5 MB
-            raise ValidationError("File is too big. Max size - 5 MB")
+        if avatar and avatar.size > PHOTO_SIZE_CONSTRAINT:
+            raise ValidationError(
+                f"Max size - {round(PHOTO_SIZE_CONSTRAINT / 1000000)} MB"
+            )
         return avatar
 
 
