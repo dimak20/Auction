@@ -33,7 +33,7 @@ For Windows system
 venv\Scripts\activate
 ```
 
-3. Install requirments.txt by the command below  
+3. Install requirements.txt by the command below  
 
 
 ```shell

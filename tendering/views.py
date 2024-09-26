@@ -35,37 +35,37 @@ def index(request: HttpRequest) -> HTTPResponse:
     num_lots = Lot.objects.count()
     num_active_lots = Lot.objects.filter(is_active=True).count()
     num_bids = Bid.objects.count()
-    sum_lots = Lot.objects.aggregate(total=Sum("current_price"))
-    lot_participants = Lot.objects.annotate(p_c=Count("participant"))
-    avg_bids = lot_participants.aggregate(avg=Avg("p_c"))
-    recent_bids = Bid.objects.order_by("-created_time")[:5]
-    bid_data = []
-    for bid in recent_bids:
-        num_participants = bid.lot.participant.count()
-        bid_info = {
+    sum_lots = Lot.objects.aggregate(total=Sum("current_price"))["total"] or 0
+    avg_bids = Lot.objects.annotate(
+        participant_count=Count("participant")
+    ).aggregate(
+        avg=Avg("participant_count")
+    )["avg"]
+
+    recent_bids = Bid.objects.select_related("lot", "user").order_by("-created_time")[:5]
+
+    bid_data = [
+        {
             "bid_lot": bid.lot.name,
             "bid_id": bid.id,
             "amount": bid.amount,
-            "user": bid.user.username,
-            "created_time": bid.created_time,
             "percentage": int(bid.lot.get_progress_percentage()),
-            "bidders": num_participants,
+            "bidders": bid.lot.participant.count(),
         }
-        bid_data.append(bid_info)
+        for bid in recent_bids
+    ]
+
     context = {
         "num_categories": num_categories,
         "num_users": num_users,
         "num_lots": num_lots,
         "num_active_lots": num_active_lots,
         "num_bids": num_bids,
-        "sum_lots": sum_lots["total"],
-        "avg_bids": round(avg_bids["avg"], 2) if avg_bids["avg"] else 0,
-        "first_bid": bid_data[0] if len(bid_data) > 0 else None,
-        "second_bid": bid_data[1] if len(bid_data) > 1 else None,
-        "third_bid": bid_data[2] if len(bid_data) > 2 else None,
-        "fourth_bid": bid_data[3] if len(bid_data) > 3 else None,
-        "fifth_bid": bid_data[4] if len(bid_data) > 4 else None,
+        "sum_lots": sum_lots,
+        "avg_bids": round(avg_bids, 2),
+        "bids": bid_data,
     }
+
     return render(request, "pages/index.html", context=context)
 
 
@@ -355,5 +355,5 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
         return request.user == obj or request.user.is_superuser
 
 
-def rules(request:HttpRequest) -> HTTPResponse:
+def rules(request: HttpRequest) -> HTTPResponse:
     return render(request, "tendering/rules.html")
