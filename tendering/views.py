@@ -69,7 +69,7 @@ def index(request: HttpRequest) -> HTTPResponse:
     return render(request, "pages/index.html", context=context)
 
 
-def register(request) -> HTTPResponse:
+def register(request: HttpRequest) -> HTTPResponse:
     if request.method == "POST":
         form = UserCreateForm(request.POST)
         if form.is_valid():
@@ -116,7 +116,7 @@ class InactiveLotListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-def close_expired_lots():
+def close_expired_lots() -> None:
     now = timezone.now()
     expired_lots = Lot.objects.filter(is_active=True, end_date__lte=now)
     for lot in expired_lots:
@@ -133,12 +133,7 @@ class ActiveLotListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "active_lot_list"
     template_name = "tendering/active_list.html"
 
-    def get_context_data(
-            self,
-            *,
-            object_list=None,
-            **kwargs
-    ) -> dict:
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(
             ActiveLotListView,
             self
@@ -217,7 +212,7 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
     form_class = CommentForm
 
-    def form_valid(self, form) -> HttpResponseRedirect:
+    def form_valid(self, form: CommentForm) -> HttpResponseRedirect:
         lot_id = self.request.POST.get("lot_id")
         lot = get_object_or_404(Lot, id=lot_id)
         comment = form.save(commit=False)
@@ -231,7 +226,7 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
     model = Bid
     form_class = BidForm
 
-    def form_valid(self, form) -> HttpResponseRedirect:
+    def form_valid(self, form: BidForm) -> HttpResponseRedirect:
         lot_id = self.request.POST.get("lot_id")
         lot = get_object_or_404(Lot, id=lot_id)
         bid = form.save(commit=False)
@@ -243,7 +238,7 @@ class BidCreateView(LoginRequiredMixin, generic.CreateView):
             lot.save()
         return redirect("tendering:lot-detail", pk=lot.id)
 
-    def form_invalid(self, form) -> HTTPResponse:
+    def form_invalid(self, form: BidForm) -> HTTPResponse:
         lot_id = self.kwargs.get("pk")
         lot = get_object_or_404(Lot, id=lot_id)
         context = {
@@ -282,7 +277,7 @@ class LotUpdateView(LoginRequiredMixin, generic.UpdateView):
             kwargs={"pk": self.object.id}
         )
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs) -> None:
         if self.get_object().owner.pk != request.user.pk and not request.user.is_superuser:
             messages.info(request, "This is not your lot")
             return redirect("tendering:index")
@@ -296,7 +291,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def delete(
             self,
-            request,
+            request: HttpRequest,
             *args,
             **kwargs
     ) -> HttpResponseForbidden | None:
@@ -307,7 +302,7 @@ class LotDeleteView(LoginRequiredMixin, generic.DeleteView):
             )
         return super().delete(request, *args, **kwargs)
 
-    def has_permission_to_delete(self, request, obj) -> bool:
+    def has_permission_to_delete(self, request: HttpRequest, obj) -> bool:
         return request.user == obj.owner or request.user.is_superuser
 
 
@@ -340,7 +335,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def delete(
             self,
-            request,
+            request: HttpRequest,
             *args,
             **kwargs
     ) -> HttpResponseForbidden | None:
@@ -351,7 +346,7 @@ class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
             )
         return super().delete(request, *args, **kwargs)
 
-    def has_permission_to_delete(self, request, obj) -> bool:
+    def has_permission_to_delete(self, request: HttpRequest, obj) -> bool:
         return request.user == obj or request.user.is_superuser
 
 
