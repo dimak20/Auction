@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Users table
+{#            <a class="btn btn-primary" style="float:right;font-size: 16px; line-height: 1.5"#}
+{#                             href="{% url 'tendering:user-create' %}">+</a>#}
+          </h6>
+
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">All bids</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last bid
+                </th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+              </thead>
+              {% if user_list %}
+                {% for user in user_list %}
+                  <tbody>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        {% if user.avatar %}
+                          <div>
+                            <img src="{{ user.avatar.url }}" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                        {% else %}
+                        <div>
+                          <img src="{% static 'img/img-user-list-3.png' %}" class="avatar avatar-sm me-3" alt="user1">
+                        </div>
+                        {% endif %}
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">{{ user.username }}</h6>
+                          <p class="text-xs text-secondary mb-0">{{ user.first_name }} {{ user.last_name }}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">{{ user.bids_count }}</p>
+                      <p class="text-xs text-secondary mb-0"></p>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm bg-gradient-success">Online</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">{{ user.last_bid|date:"d/m/y" }}</span>
+                    </td>
+                    <td class="align-middle">
+                      <a href="{{ user.get_absolute_url }}" class="text-secondary font-weight-bold text-xs"
+                         data-toggle="tooltip" data-original-title="Edit user">
+                        More
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                {% endfor %}
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% include "includes/footer.html" %}
+{% endblock content %}

@@ -1,0 +1,983 @@
+[
+  {
+    "model": "tendering.category",
+    "pk": 1,
+    "fields": {
+      "name": "Antiques"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 2,
+    "fields": {
+      "name": "Art"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 3,
+    "fields": {
+      "name": "Coins & Notes"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 4,
+    "fields": {
+      "name": "Collectibles"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 5,
+    "fields": {
+      "name": "Jewelry"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 6,
+    "fields": {
+      "name": "Judaica"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 7,
+    "fields": {
+      "name": "Memorabilia"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 8,
+    "fields": {
+      "name": "Militaria"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 9,
+    "fields": {
+      "name": "Electronics"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 10,
+    "fields": {
+      "name": "Watches"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 11,
+    "fields": {
+      "name": "Cars"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 12,
+    "fields": {
+      "name": "Books"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 13,
+    "fields": {
+      "name": "Clothing"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 14,
+    "fields": {
+      "name": "Wine"
+    }
+  },
+  {
+    "model": "tendering.category",
+    "pk": 15,
+    "fields": {
+      "name": "Other"
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$0XC8fB46djl0FS2DfqT4Sg$f/e8a8sGwEGCkXtw4YTVZ0fZVCAflVoZI8Qed2V0WpI=",
+      "last_login": "2024-09-03T22:44:40.686Z",
+      "is_superuser": true,
+      "username": "test_addmin",
+      "first_name": "Aaaaaa",
+      "last_name": "Bbbb",
+      "email": "dimc@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-08-24T19:02:55.361Z",
+      "phone_number": null,
+      "date_of_birth": null,
+      "location": null,
+      "bio": "",
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$mcbjlst7CjdTMxJHgUP2te$ho5yt62wKhXeDhSN8D33XcB6L5RjEKde8Srjc9diQwY=",
+      "last_login": "2024-08-31T21:36:48.677Z",
+      "is_superuser": false,
+      "username": "test_user",
+      "first_name": "sss",
+      "last_name": "ddd",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-27T16:31:48.897Z",
+      "phone_number": null,
+      "date_of_birth": null,
+      "location": null,
+      "bio": null,
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$ri0Nusv1YGvwQVpE1rvBm9$bFjr0GqXzF6JBpKF/EQ2QSXUlJOz7ucTDS6UW5YhY60=",
+      "last_login": "2024-09-22T11:12:49.869Z",
+      "is_superuser": false,
+      "username": "dimak",
+      "first_name": "",
+      "last_name": "",
+      "email": "dic@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-29T16:37:28.213Z",
+      "phone_number": null,
+      "date_of_birth": null,
+      "location": null,
+      "bio": "",
+      "avatar": "avatars/Project_k77kj7f.jpg",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$onkobl5vnzTSIpRAVSps8V$81lR5CcVLn0WN6IXY6ryiiLfTipxqwWs10/QePCJrkk=",
+      "last_login": "2024-09-23T07:05:55.476Z",
+      "is_superuser": false,
+      "username": "John_Dou",
+      "first_name": "John",
+      "last_name": "Dou",
+      "email": "john_dou@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-30T21:44:27.842Z",
+      "phone_number": "+380998668549",
+      "date_of_birth": "1990-10-31",
+      "location": "Ukraine",
+      "bio": "I'm a software engineer with over 10 years of experience in full-stack development. He has a strong background in building scalable web applications, specializing in Python, Django, and JavaScript frameworks. John is passionate about open-source projects and enjoys contributing to the tech community. He holds a degree in Computer Science and is constantly expanding his skill set by exploring new technologies and methodologies. In his free time, John loves hiking, reading science fiction, and experimenting with new recipes in the kitchen.",
+      "avatar": "avatars/maxresdefault_rBcUFFb.jpg",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$8GqGMBMbeejsGYEF1jIbUZ$fVvLj6B3t6TSMWCYGTNdG8knjnu72SQha+zEyUUUGJY=",
+      "last_login": "2024-08-31T20:18:54.590Z",
+      "is_superuser": false,
+      "username": "test_user2",
+      "first_name": "",
+      "last_name": "",
+      "email": "test.test@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-31T20:18:53.847Z",
+      "phone_number": null,
+      "date_of_birth": null,
+      "location": null,
+      "bio": null,
+      "avatar": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$f3mxU7KirEesmqGB4E5294$/+g1C4ZMxG4QLPgsJG+R7noQZ+QO3qf48oJv83XnoBM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "test222",
+      "first_name": "d",
+      "last_name": "d",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-03T22:46:25.985Z",
+      "phone_number": "d",
+      "date_of_birth": null,
+      "location": "d",
+      "bio": null,
+      "avatar": "avatars/pngwing.com.png",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tendering.comment",
+    "pk": 1,
+    "fields": {
+      "owner": 2,
+      "lot": 5,
+      "text": "It's mine now!",
+      "created_time": "2024-08-27T16:33:05.330Z"
+    }
+  },
+  {
+    "model": "tendering.comment",
+    "pk": 2,
+    "fields": {
+      "owner": 1,
+      "lot": 28,
+      "text": "1",
+      "created_time": "2024-08-29T10:23:36.061Z"
+    }
+  },
+  {
+    "model": "tendering.comment",
+    "pk": 3,
+    "fields": {
+      "owner": 4,
+      "lot": 32,
+      "text": "Some comment",
+      "created_time": "2024-08-31T12:59:30.992Z"
+    }
+  },
+  {
+    "model": "tendering.comment",
+    "pk": 4,
+    "fields": {
+      "owner": 3,
+      "lot": 39,
+      "text": "1",
+      "created_time": "2024-09-22T12:22:17.772Z"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 1,
+    "fields": {
+      "name": "Test_name",
+      "description": "test_description",
+      "category": 1,
+      "start_date": "2024-08-27T16:08:41.370Z",
+      "end_date": "2024-08-27T16:10:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 2,
+    "fields": {
+      "name": "Test_name2",
+      "description": "sssss",
+      "category": 2,
+      "start_date": "2024-08-27T16:12:04.015Z",
+      "end_date": "2024-08-27T16:14:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": "30.00",
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 3,
+    "fields": {
+      "name": "Tesss",
+      "description": "sssss",
+      "category": 12,
+      "start_date": "2024-08-27T16:18:05.496Z",
+      "end_date": "2024-08-27T16:27:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 4,
+    "fields": {
+      "name": "Test_name3",
+      "description": "fefdsfds",
+      "category": 15,
+      "start_date": "2024-08-27T16:28:42.048Z",
+      "end_date": "2024-08-27T16:30:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 5,
+    "fields": {
+      "name": "Test_lot_new_bidder",
+      "description": "dasdasfsa",
+      "category": 7,
+      "start_date": "2024-08-27T16:32:20.461Z",
+      "end_date": "2024-08-27T16:35:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": "25.00",
+      "owner": 2,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 6,
+    "fields": {
+      "name": "Testt",
+      "description": "htr",
+      "category": 1,
+      "start_date": "2024-08-27T17:14:34.786Z",
+      "end_date": "2024-08-27T17:16:00Z",
+      "start_price": "22.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 7,
+    "fields": {
+      "name": "nhgnhdg",
+      "description": "nhgdngh",
+      "category": 2,
+      "start_date": "2024-08-27T17:16:51.144Z",
+      "end_date": "2024-08-27T17:18:00Z",
+      "start_price": "10.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 8,
+    "fields": {
+      "name": "t4t54",
+      "description": "t4tg4",
+      "category": 1,
+      "start_date": "2024-08-27T17:25:58.904Z",
+      "end_date": "2024-08-27T17:26:00Z",
+      "start_price": "45.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 9,
+    "fields": {
+      "name": "tgbtg",
+      "description": "bgetg",
+      "category": 13,
+      "start_date": "2024-08-27T17:26:10.819Z",
+      "end_date": "2024-08-27T17:27:00Z",
+      "start_price": "44.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 10,
+    "fields": {
+      "name": "asd",
+      "description": "sad",
+      "category": 1,
+      "start_date": "2024-08-27T17:31:44.602Z",
+      "end_date": "2024-08-27T17:32:00Z",
+      "start_price": "21.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 11,
+    "fields": {
+      "name": "3123",
+      "description": "312",
+      "category": 2,
+      "start_date": "2024-08-27T17:32:01.131Z",
+      "end_date": "2024-08-27T17:33:00Z",
+      "start_price": "2.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 12,
+    "fields": {
+      "name": "rrr",
+      "description": "rrr",
+      "category": 1,
+      "start_date": "2024-08-27T17:37:13.847Z",
+      "end_date": "2024-08-27T17:38:00Z",
+      "start_price": "22.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 13,
+    "fields": {
+      "name": "555",
+      "description": "555",
+      "category": 1,
+      "start_date": "2024-08-27T17:53:44.554Z",
+      "end_date": "2024-08-27T17:54:00Z",
+      "start_price": "5.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 14,
+    "fields": {
+      "name": "t5",
+      "description": "54",
+      "category": 1,
+      "start_date": "2024-08-27T17:55:36.021Z",
+      "end_date": "2024-08-27T17:56:00Z",
+      "start_price": "5.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 15,
+    "fields": {
+      "name": "k",
+      "description": "k",
+      "category": 1,
+      "start_date": "2024-08-27T17:58:53.477Z",
+      "end_date": "2024-08-27T17:59:00Z",
+      "start_price": "4.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 16,
+    "fields": {
+      "name": "6",
+      "description": "6",
+      "category": 1,
+      "start_date": "2024-08-27T18:00:31.362Z",
+      "end_date": "2024-08-27T18:01:00Z",
+      "start_price": "3.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 17,
+    "fields": {
+      "name": "3",
+      "description": "3",
+      "category": 2,
+      "start_date": "2024-08-27T18:00:40.829Z",
+      "end_date": "2024-08-27T18:02:00Z",
+      "start_price": "5.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 18,
+    "fields": {
+      "name": "y65",
+      "description": "6yh5",
+      "category": 1,
+      "start_date": "2024-08-27T19:26:59.376Z",
+      "end_date": "2024-08-27T19:27:00Z",
+      "start_price": "1.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 19,
+    "fields": {
+      "name": "54",
+      "description": "54",
+      "category": 1,
+      "start_date": "2024-08-27T19:33:10.575Z",
+      "end_date": "2024-08-27T19:34:00Z",
+      "start_price": "2.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 20,
+    "fields": {
+      "name": "dfs",
+      "description": "dfs",
+      "category": 1,
+      "start_date": "2024-08-27T19:59:16.210Z",
+      "end_date": "2024-08-27T20:00:00Z",
+      "start_price": "2.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 21,
+    "fields": {
+      "name": "тпа",
+      "description": "тпа",
+      "category": 1,
+      "start_date": "2024-08-27T20:08:40.642Z",
+      "end_date": "2024-08-27T20:09:00Z",
+      "start_price": "1.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 22,
+    "fields": {
+      "name": "6",
+      "description": "666",
+      "category": 1,
+      "start_date": "2024-08-27T20:09:17.919Z",
+      "end_date": "2024-08-27T20:10:00Z",
+      "start_price": "3.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 23,
+    "fields": {
+      "name": "6y",
+      "description": "yt",
+      "category": 1,
+      "start_date": "2024-08-27T20:10:17.714Z",
+      "end_date": "2024-08-27T20:11:00Z",
+      "start_price": "2.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 24,
+    "fields": {
+      "name": "htr",
+      "description": "htr",
+      "category": 1,
+      "start_date": "2024-08-27T20:12:34.032Z",
+      "end_date": "2024-08-27T20:13:00Z",
+      "start_price": "5.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 25,
+    "fields": {
+      "name": "gdf",
+      "description": "gfdgfd",
+      "category": 1,
+      "start_date": "2024-08-27T20:32:09.276Z",
+      "end_date": "2024-08-27T20:33:00Z",
+      "start_price": "6.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 26,
+    "fields": {
+      "name": "ss",
+      "description": "ss",
+      "category": 1,
+      "start_date": "2024-08-27T22:23:50.916Z",
+      "end_date": "2024-08-27T22:24:00Z",
+      "start_price": "5.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 27,
+    "fields": {
+      "name": "dss",
+      "description": "sds",
+      "category": 1,
+      "start_date": "2024-08-28T08:54:07.121Z",
+      "end_date": "2024-08-28T08:55:00Z",
+      "start_price": "4.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 28,
+    "fields": {
+      "name": "freferfer",
+      "description": "freferfer",
+      "category": 1,
+      "start_date": "2024-08-29T10:22:45.684Z",
+      "end_date": "2024-08-29T10:24:00Z",
+      "start_price": "24.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 29,
+    "fields": {
+      "name": "bgfbf",
+      "description": "bgfbgf",
+      "category": 1,
+      "start_date": "2024-08-29T10:24:30.583Z",
+      "end_date": "2024-08-29T10:26:00Z",
+      "start_price": "22.00",
+      "is_active": false,
+      "current_price": "25.00",
+      "owner": 1,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 30,
+    "fields": {
+      "name": "Lot_for_John",
+      "description": "ffffdddd",
+      "category": 13,
+      "start_date": "2024-08-31T11:45:33.385Z",
+      "end_date": "2024-08-31T13:44:00Z",
+      "start_price": "6.00",
+      "is_active": false,
+      "current_price": "25.00",
+      "owner": 4,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 31,
+    "fields": {
+      "name": "Coat",
+      "description": "Some coat",
+      "category": 13,
+      "start_date": "2024-08-31T11:56:49.447Z",
+      "end_date": "2024-08-31T12:57:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": "25.00",
+      "owner": 4,
+      "photo": "tenders/23waut_u0154_cam.jpg"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 32,
+    "fields": {
+      "name": "Watches",
+      "description": "Watches are a timeless accessory that combine functionality with style. Whether you're looking for a classic timepiece, a modern smartwatch, or something in between, our collection offers a wide range of options to suit every taste and need. From elegant dress watches to rugged sports models, each watch is crafted with precision and attention to detail, ensuring reliability and a touch of sophistication onn your wrist.",
+      "category": 10,
+      "start_date": "2024-08-31T12:34:16.300Z",
+      "end_date": "2024-09-01T12:34:00Z",
+      "start_price": "30.00",
+      "is_active": false,
+      "current_price": "35.00",
+      "owner": 4,
+      "photo": "tenders/Без_названия.jfif"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 33,
+    "fields": {
+      "name": "Elegant Gold Ring",
+      "description": "This classic gold ring is a timeless piece of jewelry that exemplifies simplicity and sophistication. Crafted from high-quality gold, it features a smooth, polished finish that adds a touch of elegance to any outfit.",
+      "category": 5,
+      "start_date": "2024-08-31T18:48:16.241Z",
+      "end_date": "2024-09-01T18:48:00Z",
+      "start_price": "40.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 4,
+      "photo": "tenders/One_Ring_Blender_Render.png"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 34,
+    "fields": {
+      "name": "Old book",
+      "description": "Discover a piece of literary history with \"The Enchanted Pages,\" a captivating old book that offers a glimpse into the past. This antique volume, dating back to [insert year or era], showcases the timeless charm and craftsmanship of classic bookmaking.\r\nBound in a beautifully aged leather cover with intricate gold embossing, this book exudes an air of elegance and sophistication. The pages, delicately yellowed with age, carry the whispers of centuries past and invite readers to embark on a nostalgic journey through its well-preserved text.",
+      "category": 12,
+      "start_date": "2024-08-31T21:29:49.390Z",
+      "end_date": "2024-09-01T21:29:00Z",
+      "start_price": "50.00",
+      "is_active": false,
+      "current_price": null,
+      "owner": 3,
+      "photo": "tenders/long-lives-770.jpg"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 35,
+    "fields": {
+      "name": "Ancient sword",
+      "description": "This sword has seen many centuries and its blade has tasted countless battles. Forged in times long past, when magic was still young and the world was full of mysterious beings, this sword possesses not only a keen edge but also the spirit of an age gone by. The hilt, adorned with intricate patterns, tells tales of warriors and heroes whose names are forever etched in history.",
+      "category": 8,
+      "start_date": "2024-09-01T17:33:55.706Z",
+      "end_date": "2024-09-01T19:32:00Z",
+      "start_price": "30.00",
+      "is_active": false,
+      "current_price": "35.00",
+      "owner": 4,
+      "photo": "tenders/ba-096-ancient-sword-long-8.jpg"
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 36,
+    "fields": {
+      "name": "4353",
+      "description": "543534",
+      "category": 15,
+      "start_date": "2024-09-11T14:47:50.474Z",
+      "end_date": "2024-09-12T14:47:00Z",
+      "start_price": "20.00",
+      "is_active": false,
+      "current_price": "25.00",
+      "owner": 4,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 37,
+    "fields": {
+      "name": "123",
+      "description": "1234",
+      "category": 10,
+      "start_date": "2024-09-22T10:13:02.830Z",
+      "end_date": "2024-10-25T12:15:00Z",
+      "start_price": "10.00",
+      "is_active": true,
+      "current_price": null,
+      "owner": 4,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.lot",
+    "pk": 39,
+    "fields": {
+      "name": "65",
+      "description": "5611",
+      "category": 10,
+      "start_date": "2024-09-22T11:16:46.952Z",
+      "end_date": "2024-09-28T11:16:00Z",
+      "start_price": "11.00",
+      "is_active": true,
+      "current_price": "12.00",
+      "owner": 3,
+      "photo": ""
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 1,
+    "fields": {
+      "lot": 2,
+      "user": 1,
+      "created_time": "2024-08-27T16:13:34.760Z",
+      "amount": "30.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 2,
+    "fields": {
+      "lot": 5,
+      "user": 2,
+      "created_time": "2024-08-27T16:32:56.720Z",
+      "amount": "25.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 3,
+    "fields": {
+      "lot": 29,
+      "user": 1,
+      "created_time": "2024-08-29T10:24:41.903Z",
+      "amount": "25.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 4,
+    "fields": {
+      "lot": 30,
+      "user": 4,
+      "created_time": "2024-08-31T11:47:39.084Z",
+      "amount": "25.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 5,
+    "fields": {
+      "lot": 31,
+      "user": 4,
+      "created_time": "2024-08-31T11:57:07.052Z",
+      "amount": "25.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 6,
+    "fields": {
+      "lot": 32,
+      "user": 4,
+      "created_time": "2024-08-31T12:59:46.408Z",
+      "amount": "35.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 7,
+    "fields": {
+      "lot": 35,
+      "user": 4,
+      "created_time": "2024-09-01T17:34:17.806Z",
+      "amount": "35.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 8,
+    "fields": {
+      "lot": 36,
+      "user": 4,
+      "created_time": "2024-09-11T14:48:05.498Z",
+      "amount": "25.00"
+    }
+  },
+  {
+    "model": "tendering.bid",
+    "pk": 9,
+    "fields": {
+      "lot": 39,
+      "user": 3,
+      "created_time": "2024-09-22T12:22:07.799Z",
+      "amount": "12.00"
+    }
+  }
+]
