@@ -1,12 +1,14 @@
 import os
 from .base import *
+from dotenv import load_dotenv
 
+load_dotenv(BASE_DIR / ".env")
 DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("DOMAINS").split(",")
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 
 DATABASES = {
   'default': {
