@@ -1,0 +1,72 @@
+{% load query_transform %}
+{% if is_paginated %}
+<style>
+.pagination .page-item .page-link {
+    font-size: 14px; /* Размер шрифта */
+    width: 50px; /* Ширина кружочка */
+    height: 50px; /* Высота кружочка */
+    line-height: 50px; /* Высота строки для центрирования текста */
+    border-radius: 50%; /* Сделать элемент круглым */
+    text-align: center; /* Выравнивание текста по центру */
+    display: inline-block; /* Обеспечивает правильное отображение размеров */
+    padding: 0; /* Убирает внутренние отступы */
+    margin: 0; /* Убирает внешние отступы */
+    background-color: #007bff; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    border: 1px solid #007bff; /* Цвет границы */
+}
+.pagination .page-item .page-link.first {
+    background-color: deeppink; /* Цвет фона для First */
+    border-color: deeppink; /* Цвет границы для First */
+}
+.pagination .page-item .page-link.last {
+    background-color: deeppink; /* Цвет фона для First */
+    border-color: deeppink; /* Цвет границы для First */
+}
+
+.pagination .page-item.disabled .page-link {
+    margin: 0 15px; /* Отступы для "1 of 2" */
+}
+
+.pagination .page-item .page-link.next {
+    margin-left: 20px; /* Отступ слева для кнопки "Next" */
+}
+
+.pagination .page-item .page-link.disabled {
+    pointer-events: none; /* Отключить кликабельность */
+    opacity: 0.5; /* Сделать текст менее заметным */
+}
+</style>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link first" href="?page=1" aria-label="First">
+            <span class="page-link pagination-circle" style="background-color: deeppink; border-color: deeppink" >First</span>
+          </a>
+          <a class="page-link" href="?{% query_transform request page=page_obj.previous_page_number %}"  aria-label="Previous">
+            <span class="page-link pagination-circle">Prev</span>
+          </a>
+        </li>
+      {% endif %}
+
+      <li class="page-item disabled">
+        <a class="page-link pagination-circle" href="#">
+          {{ page_obj.number }} of {{ paginator.num_pages }}
+        </a>
+      </li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% query_transform request page=page_obj.next_page_number %}" aria-label="Next">
+            <span class="page-link pagination-circle">Next</span>
+          </a>
+          <a class="page-link last" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+            <span class="page-link pagination-circle" style="background-color: deeppink; border-color: deeppink" >Last</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

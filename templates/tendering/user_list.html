@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>User List<a style="float:right" href="{% url 'tendering:user-create' %}">+</a></h1>
+  {% if user_list %}
+    <ul>
+      {% for user in user_list %}
+        <li><a href="{{ user.get_absolute_url }}">{{ user }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

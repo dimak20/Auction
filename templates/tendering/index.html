@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Home page</title>
+{% endblock %}
+{% block content %}
+<h1>Auction</h1>
+<p>Welcome to the Auction</p>
+<h3>Auction content:</h3>
+<ul>
+  <li>Num categories: {{ num_categories }}</li>
+  <li>Num users: {{ num_users }}</li>
+  <li>Num lots: {{ num_lots }}</li>
+  <li>Num active lots: {{ num_active_lots }}</li>
+</ul>
+{% endblock %}
