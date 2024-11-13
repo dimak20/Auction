@@ -87,7 +87,7 @@ class PrivateLotsView(TestCase):
                 category=self.category,
                 end_date=self.end_date,
                 start_price=f"{i + 5}",
-                owner=self.user
+                owner=self.user,
             )
             for i in range(20)
         ]
@@ -99,7 +99,7 @@ class PrivateLotsView(TestCase):
                     category=self.category,
                     end_date=self.end_date,
                     start_price=f"{i + 5}",
-                    owner=self.user
+                    owner=self.user,
                 )
                 for i in range(20)
             ]
@@ -109,10 +109,7 @@ class PrivateLotsView(TestCase):
         filtered_lots = Lot.objects.filter(name__icontains=filter_name)[:5]
         response = self.client.get(ACTIVE_LOTS_URL + f"?name={filter_name}")
         self.assertEqual(
-            list(
-                response.context_data["active_lot_list"]
-            ),
-            list(filtered_lots)
+            list(response.context_data["active_lot_list"]), list(filtered_lots)
         )
 
     def test_lot_pagination(self):
@@ -123,7 +120,7 @@ class PrivateLotsView(TestCase):
                 category=self.category,
                 end_date=self.end_date,
                 start_price=f"{i + 5}",
-                owner=self.user
+                owner=self.user,
             )
             for i in range(20)
         ]
@@ -131,23 +128,15 @@ class PrivateLotsView(TestCase):
         pagination_number = 5
         response = self.client.get(ACTIVE_LOTS_URL + "?page=2")
         paginated_lots = list(Lot.objects.all()[pagination_number:10])
-        self.assertEqual(
-            list(
-                response.context_data["active_lot_list"]
-            ),
-            paginated_lots
-        )
+        self.assertEqual(list(response.context_data["active_lot_list"]), paginated_lots)
 
     def test_update_lot(self):
         payload = {
             "description": "new description",
-            "end_date": timezone.now() + timedelta(days=1)
+            "end_date": timezone.now() + timedelta(days=1),
         }
         self.client.post(
-            reverse(
-                "tendering:lot-update",
-                args=[self.lot.pk]),
-            data=payload
+            reverse("tendering:lot-update", args=[self.lot.pk]), data=payload
         )
         lot = Lot.objects.get(pk=self.lot.pk)
         self.assertEqual(lot.description, payload.get("description"))
